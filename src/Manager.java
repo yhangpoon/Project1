@@ -26,7 +26,6 @@ public class Manager extends Employee {
      */
     @Override
     public void run() {
-        // TODO Auto-generated method stub
 
     }
 }
