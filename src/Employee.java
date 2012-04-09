@@ -6,7 +6,7 @@
  * @author Shawn
  * @author Peter
  */
-abstract class Employee implements Runnable {
+abstract class Employee extends Thread {
 
     /**
      * Arrival status of the programmer.
