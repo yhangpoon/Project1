@@ -5,7 +5,7 @@
  * @author Shawn
  * @author Peter
  */
-public class Manager implements Runnable {
+public class Manager extends Employee {
 
     /**
      * Default Constructor.
