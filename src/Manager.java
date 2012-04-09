@@ -1,26 +1,17 @@
 /**
- * This model describes a Team Leader. It extends Programmer.
+ * This model describes the Project Manager.
  * 
  * @author Yin
  * @author Shawn
  * @author Peter
  */
-public class TeamLeader extends Employee {
-
-    /**
-     * The Team Leader's project manager.
-     */
-    private final Manager manager;
+public class Manager implements Runnable {
 
     /**
      * Default Constructor.
-     * 
-     * @param manager
-     *            - The assigned project manager
      */
-    public TeamLeader(Manager manager) {
-        this.manager = manager;
-        this.arrived = false;
+    public Manager() {
+
     }
 
     /**
@@ -38,5 +29,4 @@ public class TeamLeader extends Employee {
         // TODO Auto-generated method stub
 
     }
-
 }

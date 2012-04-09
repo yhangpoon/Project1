@@ -1,11 +1,9 @@
 /**
+ * This class starts the program.
  * 
- */
-
-/**
  * @author Yin
- * @author sst8696
- * 
+ * @author Shawn
+ * @author Peter
  */
 public class Main {
 
