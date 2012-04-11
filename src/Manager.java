@@ -1,4 +1,6 @@
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This model describes the Project Manager.
@@ -10,15 +12,18 @@ import java.util.Calendar;
 public class Manager extends Employee {
 
     /**
-     * The time
+     * The team of TeamLeaders.
      */
-    private Calendar time;
+    private HashMap<TeamLeader, Boolean> leaders = new HashMap<TeamLeader, Boolean>();
 
     /**
      * Default Constructor.
      */
-    public Manager(Calendar time) {
+    public Manager(Calendar time, List<TeamLeader> leaders) {
         this.time = time;
+        for (TeamLeader leader : leaders) {
+            this.leaders.put(leader, false);
+        }
     }
 
     /**
