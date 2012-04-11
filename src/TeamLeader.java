@@ -50,9 +50,23 @@ public class TeamLeader extends Employee {
         }
     }
     
+    /**
+     * Checks to see of all developers in the team have arrived
+     * 
+     * @return  true if the team has arrived
+     *          false if the team has not arrived
+     */
     private boolean hasTeamArrived(){
         Collection<Boolean> temp = team.values();
         return !temp.contains(false);
+    }
+    
+    /**
+     * Registers the arrival of a team member
+     * @param dev   the developer that has arrived 
+     */
+    public void hasArrived(Developer dev){
+        this.team.put(dev, true);
     }
 
     /**
