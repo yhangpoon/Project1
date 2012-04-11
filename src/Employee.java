@@ -14,8 +14,16 @@ abstract class Employee extends Thread {
      * Arrival status of the programmer.
      */
     protected Boolean arrived;
-    protected Calendar time;
-    protected Calendar simCalendar;
+
+    /**
+     * The time that the program started running.
+     */
+    protected Calendar startTime;
+
+    /**
+     * The simulated time based upon the startTime and the current time.
+     */
+    protected Calendar currentTime;
 
     /**
      * Return the arrival status of the programmer.
@@ -33,16 +41,22 @@ abstract class Employee extends Thread {
         this.arrived = true;
     }
 
+    /**
+     * Return the current simulated time based on the time elapsed since the
+     * beginning time.
+     * 
+     * @return The current simulated time in a Calendar object
+     */
     protected Calendar getTime() {
         Calendar currentCalendar = Calendar.getInstance();
-        int simulatedTime = (int) ((currentCalendar.getTimeInMillis() - time
+        int simulatedTime = (int) ((currentCalendar.getTimeInMillis() - startTime
                 .getTimeInMillis()) / 10);
 
         simulatedTime = simulatedTime * 60 * 1000;
 
-        simCalendar.setTimeInMillis(simulatedTime
-                + simCalendar.getTimeInMillis());
-        return simCalendar;
+        currentTime.setTimeInMillis(simulatedTime
+                + currentTime.getTimeInMillis());
+        return currentTime;
     }
 
     @Override
