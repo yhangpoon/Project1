@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 /**
  * This model describes the Developer. It extends Programmer.
  * 
@@ -6,6 +8,11 @@
  * @author Peter
  */
 public class Developer extends Employee {
+
+    /**
+     * The time
+     */
+    private Calendar time;
 
     /**
      * The Developer's Team Leader
@@ -18,8 +25,9 @@ public class Developer extends Employee {
      * @param leader
      *            - Assigned Team Leader
      */
-    public Developer(TeamLeader leader) {
+    public Developer(TeamLeader leader, Calendar time) {
         this.leader = leader;
+        this.time = time;
         this.arrived = false;
     }
 

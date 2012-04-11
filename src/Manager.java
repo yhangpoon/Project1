@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 /**
  * This model describes the Project Manager.
  * 
@@ -8,10 +10,15 @@
 public class Manager extends Employee {
 
     /**
+     * The time
+     */
+    private Calendar time;
+
+    /**
      * Default Constructor.
      */
-    public Manager() {
-
+    public Manager(Calendar time) {
+        this.time = time;
     }
 
     /**
