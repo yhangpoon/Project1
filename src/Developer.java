@@ -17,7 +17,7 @@ public class Developer extends Employee {
     /**
      * The Developer's Team Leader
      */
-    private final TeamLeader leader;
+    private TeamLeader leader;
 
     /**
      * Default Constructor.
@@ -25,8 +25,7 @@ public class Developer extends Employee {
      * @param leader
      *            - Assigned Team Leader
      */
-    public Developer(TeamLeader leader, Calendar time) {
-        this.leader = leader;
+    public Developer(Calendar time) {
         this.time = time;
         this.arrived = false;
     }
@@ -38,6 +37,13 @@ public class Developer extends Employee {
      */
     public void askQuestion() {
         leader.answerQuestion();
+    }
+
+    /**
+     * Set the leader
+     */
+    public void setLeader(TeamLeader leader) {
+        this.leader = leader;
     }
 
     /**
