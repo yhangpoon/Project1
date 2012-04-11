@@ -14,12 +14,17 @@ import java.util.Random;
 public class TeamLeader extends Employee {
 
     /**
+     * Availability of the Leader.
+     */
+    private boolean available;
+
+    /**
      * The Team Leader's project manager.
      */
     private Manager manager;
 
     /**
-     * The team leader team of developers
+     * The team leader team of developers.
      */
     private final HashMap<Developer, Boolean> team = new HashMap<Developer, Boolean>();
 
@@ -53,7 +58,7 @@ public class TeamLeader extends Employee {
     }
 
     /**
-     * Checks to see of all developers in the team have arrived
+     * Checks to see of all developers in the team have arrived.
      * 
      * @return true if the team has arrived false if the team has not arrived
      */
@@ -63,13 +68,20 @@ public class TeamLeader extends Employee {
     }
 
     /**
-     * Registers the arrival of a team member
+     * Registers the arrival of a team member.
      * 
      * @param dev
      *            the developer that has arrived
      */
     public void notifyArrival(Developer dev) {
         this.team.put(dev, true);
+    }
+
+    /**
+     * Gets the availability of the Leader.
+     */
+    public boolean isAvailable() {
+        return available;
     }
 
     /**

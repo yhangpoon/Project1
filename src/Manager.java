@@ -13,6 +13,11 @@ import java.util.List;
 public class Manager extends Employee {
 
     /**
+     * Availability of the Manager.
+     */
+    private boolean available;
+
+    /**
      * The team of TeamLeaders.
      */
     private final HashMap<TeamLeader, Boolean> leaders = new HashMap<TeamLeader, Boolean>();
@@ -49,6 +54,13 @@ public class Manager extends Employee {
      */
     public void answerQuestion() {
         // TODO
+    }
+
+    /**
+     * Gets the availability of the Manager.
+     */
+    public boolean isAvailable() {
+        return available;
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.List;
 public class Main {
 
     /**
-     * Main method to start the program
+     * Main method to start the program.
      * 
      * @param args
      *            - Input arguments

@@ -10,7 +10,7 @@ import java.util.Calendar;
 public class Developer extends Employee {
 
     /**
-     * The Developer's Team Leader
+     * The Developer's Team Leader.
      */
     private TeamLeader leader;
 
@@ -37,7 +37,7 @@ public class Developer extends Employee {
     }
 
     /**
-     * Set the leader
+     * Set the leader.
      */
     public void setLeader(TeamLeader leader) {
         this.leader = leader;
