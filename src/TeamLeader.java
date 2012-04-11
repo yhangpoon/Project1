@@ -30,7 +30,7 @@ public class TeamLeader extends Employee {
      *            - The assigned project manager
      */
     public TeamLeader(Calendar time, List<Developer> devs) {
-        super.time = time;
+        super.starttime = starttime;
         this.arrived = false;
         for (int i=0; i<devs.size(); i++){
             this.team.put(devs.get(i), false);
@@ -65,7 +65,7 @@ public class TeamLeader extends Employee {
      * Registers the arrival of a team member
      * @param dev   the developer that has arrived 
      */
-    public void hasArrived(Developer dev){
+    public void notifyArrival(Developer dev){
         this.team.put(dev, true);
     }
 
