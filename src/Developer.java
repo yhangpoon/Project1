@@ -21,6 +21,7 @@ public class Developer extends Employee {
      *            - Assigned Team Leader
      */
     public Developer(Calendar time) {
+        currentTime = Calendar.getInstance();
         currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         this.startTime = time;
         this.arrived = false;

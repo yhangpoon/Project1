@@ -15,13 +15,14 @@ public class Manager extends Employee {
     /**
      * The team of TeamLeaders.
      */
-    private HashMap<TeamLeader, Boolean> leaders = new HashMap<TeamLeader, Boolean>();
+    private final HashMap<TeamLeader, Boolean> leaders = new HashMap<TeamLeader, Boolean>();
 
     /**
      * Default Constructor.
      */
     public Manager(Calendar time, List<TeamLeader> leaders) {
         this.startTime = time;
+        currentTime = Calendar.getInstance();
         currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         for (TeamLeader leader : leaders) {
             this.leaders.put(leader, false);
