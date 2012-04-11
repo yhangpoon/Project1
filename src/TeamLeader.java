@@ -1,4 +1,5 @@
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -11,11 +12,6 @@ import java.util.Random;
  * @author Peter
  */
 public class TeamLeader extends Employee {
-
-    /**
-     * The time
-     */
-    private Calendar time;
 
     /**
      * The Team Leader's project manager.
@@ -34,7 +30,7 @@ public class TeamLeader extends Employee {
      *            - The assigned project manager
      */
     public TeamLeader(Calendar time, List<Developer> devs) {
-        this.time = time;
+        super.time = time;
         this.arrived = false;
         for (int i=0; i<devs.size(); i++){
             this.team.put(devs.get(i), false);
@@ -52,6 +48,11 @@ public class TeamLeader extends Employee {
         } else {
             //TODO
         }
+    }
+    
+    private boolean hasTeamArrived(){
+        Collection<Boolean> temp = team.values();
+        return !temp.contains(false);
     }
 
     /**
