@@ -31,6 +31,7 @@ public class TeamLeader extends Employee {
      */
     public TeamLeader(Calendar time, List<Developer> devs) {
         super.startTime = time;
+        currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         this.arrived = false;
         for (int i=0; i<devs.size(); i++){
             this.team.put(devs.get(i), false);
