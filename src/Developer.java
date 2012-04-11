@@ -10,11 +10,6 @@ import java.util.Calendar;
 public class Developer extends Employee {
 
     /**
-     * The time
-     */
-    private Calendar time;
-
-    /**
      * The Developer's Team Leader
      */
     private TeamLeader leader;
@@ -26,7 +21,8 @@ public class Developer extends Employee {
      *            - Assigned Team Leader
      */
     public Developer(Calendar time) {
-        this.time = time;
+        currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
+        this.startTime = time;
         this.arrived = false;
     }
 
