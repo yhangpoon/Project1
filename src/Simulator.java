@@ -14,7 +14,7 @@ public class Simulator {
     private static Calendar simCalendar;
     private static Simulator thisSimulator;
 
-    public Simulator getSimulator() {
+    public static Simulator getSimulator() {
         if (thisSimulator == null) {
             return thisSimulator = new Simulator();
         }

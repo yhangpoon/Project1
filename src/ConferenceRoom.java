@@ -22,14 +22,14 @@ public class ConferenceRoom {
     /**
      * Use the conference room and locks it.
      */
-    public void useRoom() {
+    public synchronized void useRoom() {
         this.available = false;
     }
 
     /**
      * Release the conference room and unlocks it.
      */
-    public void releaseRoom() {
+    public synchronized void releaseRoom() {
         this.available = true;
     }
 
@@ -38,7 +38,7 @@ public class ConferenceRoom {
      * 
      * @return available - status of the room
      */
-    public boolean available() {
+    public synchronized boolean available() {
         return this.available;
     }
 
