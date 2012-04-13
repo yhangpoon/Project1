@@ -40,10 +40,17 @@ abstract class Employee extends Thread {
     }
 
     /**
-     * The programmer has arrived.
+     * The employee has arrived.
      */
     protected void arrived() {
         this.arrived = true;
+    }
+
+    /**
+     * The employee has left.
+     */
+    protected void left() {
+        this.arrived = false;
     }
 
     /**

@@ -71,25 +71,31 @@ public class Manager extends Employee {
     @Override
     public void run() {
 
-        // Arrives at 8am
-        // Do administrative stuff until all team leads arrived
-        // Daily 15min meeting with team leads Notify all when back
-        // 10am - 11am Meeting (Finish answering first) Notify all when back
-        // 12pm - 1pm Lunch (Finish answering first) Notify all when back
-        // 2pm - 3pm Meeting (Finish answering first) Notify all when back
-        // 4:15pm Meeting in Conference room
-
-        // TODO wait random
-        manager.notifyArrival(this);
-        // TODO do manager meeting
-        while (!this.hasTeamArrived()) {
-            try {
-                this.wait(10);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        if (startTime != null) {
+            arrived();
         }
+
+        while (hasArrived()) {
+
+            // Do administrative stuff until all team leads arrived
+            while (!hasLeadersArrived()) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+            // Daily 15min meeting with team leads Notify all when back
+
+            // 10am - 11am Meeting (Finish answering first) Notify all when back
+            // 12pm - 1pm Lunch (Finish answering first) Notify all when back
+            // 2pm - 3pm Meeting (Finish answering first) Notify all when back
+            // 4:15pm Meeting in Conference room
+            // 5pm Leave
+        }
+
         try {
             conferenceRoom.lockRoom();
             // TODO tell team to go to the conference room
