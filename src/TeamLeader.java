@@ -22,11 +22,6 @@ public class TeamLeader extends Employee {
      * The Team Leader's project manager.
      */
     private Manager manager;
-    
-    /**
-     * The one conference room that will be used.
-     */
-    private ConferenceRoom conferenceRoom;
 
     /**
      * The team leader team of developers.
@@ -39,7 +34,8 @@ public class TeamLeader extends Employee {
      * @param manager
      *            - The assigned project manager
      */
-    public TeamLeader(Calendar time, List<Developer> devs, ConferenceRoom confRoom) {
+    public TeamLeader(Calendar time, List<Developer> devs,
+            ConferenceRoom confRoom) {
         super.startTime = time;
         this.conferenceRoom = confRoom;
         currentTime = Calendar.getInstance();
@@ -98,7 +94,7 @@ public class TeamLeader extends Employee {
         // TODO wait random
         manager.notifyArrival(this);
         // TODO do manager meeting
-        while (!this.hasTeamArrived()){
+        while (!this.hasTeamArrived()) {
             try {
                 this.wait(10);
             } catch (InterruptedException e) {
@@ -115,15 +111,16 @@ public class TeamLeader extends Employee {
             e.printStackTrace();
         }
         conferenceRoom.releaseRoom();
-        System.out.println(Thread.currentThread().getName()+" is hard at work");
-        
-        //TODO randomly ask questions
-        
-        //TODO randomly decide to go to lunch
-        
-        //TODO meeting at 4:00
-        
-        //TODO leave after 8 Hours
+        System.out.println(Thread.currentThread().getName()
+                + " is hard at work");
+
+        // TODO randomly ask questions
+
+        // TODO randomly decide to go to lunch
+
+        // TODO meeting at 4:00
+
+        // TODO leave after 8 Hours
     }
 
 }

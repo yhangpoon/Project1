@@ -25,8 +25,10 @@ public class Manager extends Employee {
     /**
      * Default Constructor.
      */
-    public Manager(Calendar time, List<TeamLeader> leaders) {
+    public Manager(Calendar time, List<TeamLeader> leaders,
+            ConferenceRoom conferenceRoom) {
         this.startTime = time;
+        this.conferenceRoom = conferenceRoom;
         currentTime = Calendar.getInstance();
         currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         for (TeamLeader leader : leaders) {
@@ -52,8 +54,8 @@ public class Manager extends Employee {
     /**
      * Answers Developer's question.
      */
-    public void answerQuestion() {
-        // TODO
+    public boolean answerQuestion() {
+        return true;
     }
 
     /**
@@ -69,5 +71,43 @@ public class Manager extends Employee {
     @Override
     public void run() {
 
+        // Arrives at 8am
+        // Do administrative stuff until all team leads arrived
+        // Daily 15min meeting with team leads Notify all when back
+        // 10am - 11am Meeting (Finish answering first) Notify all when back
+        // 12pm - 1pm Lunch (Finish answering first) Notify all when back
+        // 2pm - 3pm Meeting (Finish answering first) Notify all when back
+        // 4:15pm Meeting in Conference room
+
+        // TODO wait random
+        manager.notifyArrival(this);
+        // TODO do manager meeting
+        while (!this.hasTeamArrived()) {
+            try {
+                this.wait(10);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        try {
+            conferenceRoom.lockRoom();
+            // TODO tell team to go to the conference room
+            conferenceRoom.useRoom();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        conferenceRoom.releaseRoom();
+        System.out.println(Thread.currentThread().getName()
+                + " is hard at work");
+
+        // TODO randomly ask questions
+
+        // TODO randomly decide to go to lunch
+
+        // TODO meeting at 4:00
+
+        // TODO leave after 8 Hours
     }
 }

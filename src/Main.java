@@ -54,7 +54,7 @@ public class Main {
         leaders.add(leader1);
         leaders.add(leader2);
         leaders.add(leader3);
-        Manager manager = new Manager(time, leaders);
+        Manager manager = new Manager(time, leaders, room);
 
         manager.start();
 

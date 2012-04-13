@@ -26,6 +26,11 @@ abstract class Employee extends Thread {
     protected Calendar currentTime;
 
     /**
+     * The one conference room that will be used.
+     */
+    protected ConferenceRoom conferenceRoom;
+
+    /**
      * Return the arrival status of the programmer.
      * 
      * @return arrived - the arrival status
