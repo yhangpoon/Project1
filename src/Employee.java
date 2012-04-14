@@ -60,12 +60,33 @@ abstract class Employee extends Thread {
      * @return The current simulated time in a Calendar object
      */
     protected Long getTime() {
-        Long time = (Long) (Calendar.getInstance().getTimeInMillis() - startTime
-                .getTimeInMillis());
+        Long time = Calendar.getInstance().getTimeInMillis()
+                - startTime.getTimeInMillis();
 
         time = time / 600 + 8;
 
         return time;
+    }
+
+    protected String getTimeInString() {
+        String result = null;
+
+        Long time = Calendar.getInstance().getTimeInMillis()
+                - startTime.getTimeInMillis();
+        Double timeInDouble = (double) time;
+        timeInDouble = timeInDouble / 600 + 8;
+        String timeInString = timeInDouble.toString();
+        String[] timeInfo = timeInString.split("\\.");
+        String hour = timeInfo[0];
+        timeInDouble = Double.parseDouble("0." + timeInfo[1]);
+        timeInDouble = timeInDouble * 60;
+        int timeInInt = timeInDouble.intValue();
+        if (timeInInt < 10) {
+            result = hour + ":" + "0" + timeInInt;
+        } else {
+            result = hour + ":" + timeInInt;
+        }
+        return result;
     }
 
     @Override
