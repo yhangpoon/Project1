@@ -188,7 +188,13 @@ public class TeamLeader extends Employee {
             
             if (hadUpdateMeeting && getTime() - arivalTime >= 8) {
                 //TODO leave after 8 Hours
-                System.out.println(getTimeInString()+" "+this.name+" leaves");
+                try {
+                    sleep(rand.nextInt(280));
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println(getTimeInString()+" "+this.name+" leaves work");
                 atWork = false;
             }
         }
