@@ -44,8 +44,6 @@ public class TeamLeader extends Employee {
         super.startTime = time;
         super.name = id;
         this.conferenceRoom = confRoom;
-        currentTime = Calendar.getInstance();
-        currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         this.arrived = false;
         for (int i = 0; i < devs.size(); i++) {
             this.team.put(devs.get(i), false);
@@ -115,8 +113,8 @@ public class TeamLeader extends Employee {
     public void run() {
         
         // TODO wait random
-        this.arivalTime = currentTime.getTimeInMillis();
-        System.out.println(this.name+" arrived at "+currentTime.getTimeInMillis());
+        this.arivalTime = getTime();
+        System.out.println(this.name+" arrived at "+this.arivalTime);
         manager.notifyArrival(this);
         // TODO do manager meeting
         System.out.println(this.name+" waits for his team to arrive");
@@ -138,6 +136,7 @@ public class TeamLeader extends Employee {
         }
         boolean atWork = true;
         boolean hadUpdateMeeting = false;
+        boolean ateLunch = false;
         System.out.println(this.name+" is hard at work");
         while(atWork){
             Random rand = new Random();
@@ -149,11 +148,12 @@ public class TeamLeader extends Employee {
             }
         
             //TODO randomly decide to go to lunch
-        
-            if (available && !hadUpdateMeeting && currentTime.getTimeInMillis() >= 4800) {
+            
+            //check to see if its time for the update meeting.
+            if (available && !hadUpdateMeeting && getTime() >= 16) {
                 //TODO meeting at 4:00
+                System.out.println(this.name+" goes to update meeting");
                 try {
-                    System.out.println(this.name+" goes to update meeting");
                     conferenceRoom.projectStatusMeeting();
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
@@ -161,7 +161,7 @@ public class TeamLeader extends Employee {
                 }
             }
             
-            if (hadUpdateMeeting && getTime().getTimeInMillis() - arivalTime >= 4800) {
+            if (hadUpdateMeeting && getTime() - arivalTime >= 8) {
                 //TODO leave after 8 Hours
                 System.out.println(this.name+"");
                 atWork = false;
