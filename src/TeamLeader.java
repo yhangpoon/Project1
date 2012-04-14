@@ -40,8 +40,9 @@ public class TeamLeader extends Employee {
      *            - The assigned project manager
      */
     public TeamLeader(Calendar time, List<Developer> devs,
-            ConferenceRoom confRoom) {
+            ConferenceRoom confRoom, String id) {
         super.startTime = time;
+        super.name = id;
         this.conferenceRoom = confRoom;
         currentTime = Calendar.getInstance();
         currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
@@ -133,6 +134,12 @@ public class TeamLeader extends Employee {
         
             if (currentTime.getTimeInMillis() == 4800) {
                 //TODO meeting at 4:00
+                try {
+                    conferenceRoom.projectStatusMeeting();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         
             if (currentTime.getTimeInMillis() - arivalTime > 4800) {
