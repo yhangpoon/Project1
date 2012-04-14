@@ -84,9 +84,11 @@ public class TeamLeader extends Employee {
      * 
      * @param dev
      *            the developer that has arrived
+     * @throws InterruptedException 
      */
-    public void notifyArrival(Developer dev) {
+    public void notifyArrival(Developer dev) throws InterruptedException {
         this.team.put(dev, true);
+        this.wait();
     }
 
     /**
@@ -101,6 +103,7 @@ public class TeamLeader extends Employee {
      */
     @Override
     public void run() {
+        
         // TODO wait random
         this.arivalTime = currentTime.getTimeInMillis();
         manager.notifyArrival(this);
@@ -115,28 +118,25 @@ public class TeamLeader extends Employee {
         }
         try {
             conferenceRoom.lockRoom();
-            // TODO tell team to go to the conference room
-            conferenceRoom.useRoom();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        conferenceRoom.releaseRoom();
-        System.out.println(Thread.currentThread().getName()+" is hard at work");
+        boolean atWork = true;
+        System.out.println("Team Leader "+Thread.currentThread().getName()
+                            +" is hard at work");
+        while(atWork){
+            //TODO randomly ask questions
         
-        //TODO randomly ask questions
+            //TODO randomly decide to go to lunch
         
-        //TODO randomly decide to go to lunch
+            if (currentTime.getTimeInMillis() == 4800) {
+                //TODO meeting at 4:00
+            }
         
-        if (currentTime.getTimeInMillis() == 4800) {
-            //TODO meeting at 4:00
+            if (currentTime.getTimeInMillis() - arivalTime > 4800) {
+                //TODO leave after 8 Hours
+            }
         }
-        
-        if (currentTime.getTimeInMillis() - arivalTime > 4800) {
-            //TODO leave after 8 Hours
-        }
-        System.out.println(Thread.currentThread().getName()
-                + " is hard at work");
     }
-
 }

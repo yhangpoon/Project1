@@ -29,6 +29,11 @@ abstract class Employee extends Thread {
      * The one conference room that will be used.
      */
     protected ConferenceRoom conferenceRoom;
+    
+    /**
+     * The name of the employee.
+     */
+    protected String name;
 
     /**
      * Return the arrival status of the programmer.
