@@ -72,7 +72,7 @@ public class Developer extends Employee {
             }
             // Lunch
             if (!hasGoneToLunch) {
-                int goToLunch = ran.nextInt(400000);
+                int goToLunch = ran.nextInt(200000);
                 if (goToLunch == 1) {
                     System.out.println(getTimeInString() + " " + name
                             + " has gone to lunch");
