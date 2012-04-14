@@ -55,7 +55,7 @@ public class Manager extends Employee {
     /**
      * Answers Developer's question.
      */
-    public boolean answerQuestion() {
+    public synchronized boolean answerQuestion() {
         return true;
     }
 
@@ -64,6 +64,24 @@ public class Manager extends Employee {
      */
     public boolean isAvailable() {
         return available;
+    }
+
+    /**
+     * Notify everyone that's waiting on the Manager.
+     */
+    private synchronized void notifyEveryone() {
+        this.notifyAll();
+    }
+
+    /**
+     * Manager working.
+     */
+    private synchronized void working() {
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            return;
+        }
     }
 
     /**
@@ -81,11 +99,7 @@ public class Manager extends Employee {
 
         // Do administrative stuff until all team leads arrived
         while (!hasLeadersArrived()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                return;
-            }
+            working();
         }
 
         // Daily 15min meeting with team leads Notify all when back
@@ -100,7 +114,7 @@ public class Manager extends Employee {
             System.err.print(e.toString());
         }
         available = true;
-        this.notifyAll();
+        notifyEveryone();
 
         while (hasArrived()) {
             // 10am - 11am Meeting (Finish answering first)
@@ -119,7 +133,7 @@ public class Manager extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                this.notifyAll();
+                notifyEveryone();
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
@@ -138,7 +152,7 @@ public class Manager extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                this.notifyAll();
+                notifyEveryone();
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
@@ -157,7 +171,7 @@ public class Manager extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                this.notifyAll();
+                notifyEveryone();
             }
 
             // 4:15pm Meeting in Conference room
