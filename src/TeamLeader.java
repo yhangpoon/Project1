@@ -118,6 +118,7 @@ public class TeamLeader extends Employee {
         }
         try {
             conferenceRoom.lockRoom();
+            this.notifyAll();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -126,7 +127,12 @@ public class TeamLeader extends Employee {
         System.out.println("Team Leader "+Thread.currentThread().getName()
                             +" is hard at work");
         while(atWork){
-            //TODO randomly ask questions
+            Random rand = new Random();
+            int task = rand.nextInt(10);
+            
+            if (task == 0){
+                manager.answerQuestion();
+            }
         
             //TODO randomly decide to go to lunch
         
@@ -136,6 +142,7 @@ public class TeamLeader extends Employee {
         
             if (currentTime.getTimeInMillis() - arivalTime > 4800) {
                 //TODO leave after 8 Hours
+                atWork = false;
             }
         }
     }

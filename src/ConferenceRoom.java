@@ -20,7 +20,11 @@ public class ConferenceRoom {
     public ConferenceRoom() {
         this.available = new AtomicInteger(1);
     }
-
+    
+    public void projectStatusMeeting() throws InterruptedException{
+        this.wait();
+    }
+    
     /**
      * Return the status of the conference room.
      * 
@@ -35,5 +39,4 @@ public class ConferenceRoom {
         this.available.set(1);
         this.notifyAll();
     }
-
 }
