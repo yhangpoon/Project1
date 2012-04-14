@@ -26,7 +26,8 @@ public class Manager extends Employee {
      * Default Constructor.
      */
     public Manager(Calendar time, List<TeamLeader> leaders,
-            ConferenceRoom conferenceRoom) {
+            ConferenceRoom conferenceRoom, String name) {
+        this.name = name;
         this.startTime = time;
         this.conferenceRoom = conferenceRoom;
         currentTime = Calendar.getInstance();
@@ -90,8 +91,8 @@ public class Manager extends Employee {
         // Daily 15min meeting with team leads Notify all when back
         Long time = Calendar.getInstance().getTimeInMillis()
                 - startTime.getTimeInMillis();
-        System.out.println(((time / 600 + 8) % 12)
-                + ": Manager goes to the daily 15 minutes meeting");
+        System.out.println(((time / 600 + 8) % 12) + ": " + name
+                + " goes to the daily 15 minutes meeting");
         available = false;
         try {
             Thread.sleep(150);
@@ -109,8 +110,8 @@ public class Manager extends Employee {
                             - startTime.getTimeInMillis() < 1800) {
                 Long current = Calendar.getInstance().getTimeInMillis()
                         - startTime.getTimeInMillis();
-                System.out.println(((current / 600 + 8) % 12)
-                        + ": Manager goes to the executive meeting");
+                System.out.println(((current / 600 + 8) % 12) + ": " + name
+                        + " goes to the executive meeting");
                 available = false;
                 try {
                     Thread.sleep(600);
@@ -128,8 +129,8 @@ public class Manager extends Employee {
                             - startTime.getTimeInMillis() < 3000) {
                 Long current = Calendar.getInstance().getTimeInMillis()
                         - startTime.getTimeInMillis();
-                System.out.println(((current / 600 + 8) % 12)
-                        + ": Manager goes to lunch");
+                System.out.println(((current / 600 + 8) % 12) + ": " + name
+                        + " goes to lunch");
                 available = false;
                 try {
                     Thread.sleep(600);
@@ -147,8 +148,8 @@ public class Manager extends Employee {
                             - startTime.getTimeInMillis() < 4200) {
                 Long current = Calendar.getInstance().getTimeInMillis()
                         - startTime.getTimeInMillis();
-                System.out.println(((current / 600 + 8) % 12)
-                        + ": Manager goes to the executive meeting");
+                System.out.println(((current / 600 + 8) % 12) + ": " + name
+                        + " goes to the executive meeting");
                 available = false;
                 try {
                     Thread.sleep(600);
@@ -165,8 +166,8 @@ public class Manager extends Employee {
                     && inMeeting == false) {
                 Long current = Calendar.getInstance().getTimeInMillis()
                         - startTime.getTimeInMillis();
-                System.out.println(((current / 600 + 8) % 12)
-                        + ": Manager goes to the project status meeting");
+                System.out.println(((current / 600 + 8) % 12) + ": " + name
+                        + " goes to the project status meeting");
                 available = false;
                 inMeeting = true;
                 try {
@@ -182,8 +183,8 @@ public class Manager extends Employee {
                     - startTime.getTimeInMillis() >= 5400) {
                 Long current = Calendar.getInstance().getTimeInMillis()
                         - startTime.getTimeInMillis();
-                System.out.println(((current / 600 + 8) % 12)
-                        + ": Manager leaves work");
+                System.out.println(((current / 600 + 8) % 12) + ": " + name
+                        + " leaves work");
                 left();
             }
         }

@@ -63,7 +63,7 @@ public class Main {
         leaders.add(leader1);
         leaders.add(leader2);
         leaders.add(leader3);
-        Manager manager = new Manager(time, leaders, room);
+        Manager manager = new Manager(time, leaders, room, "Manager");
         for (TeamLeader leader : leaders) {
             leader.setManager(manager);
         }
