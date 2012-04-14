@@ -93,10 +93,12 @@ public class Developer extends Employee {
                     conferenceRoom.projectStatusMeeting();
                 } catch (InterruptedException e) {
                 }
-                System.out.println(getTimeInString() + " " + name
-                        + " returned from the status meeting");
                 hasGoneToMeeting = true;
             }
+        }
+        try {
+            sleep(ran.nextInt(280));
+        } catch (InterruptedException e) {
         }
         System.out.println(getTimeInString() + " " + name + " Leaves work");
     }
