@@ -175,8 +175,10 @@ public class TeamLeader extends Employee {
         
             //TODO randomly decide to go to lunch
             if (!ateLunch && available && task>3 && task<10 ){
+                available = false;
                 System.out.println(getTimeInString()+" "+this.name
                         +" went to lunch");
+                
                 ateLunch = true;
                 try {
                     sleep(30 + rand.nextInt(31));
@@ -184,6 +186,7 @@ public class TeamLeader extends Employee {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+                available = true;
             }
             
             if (hadUpdateMeeting && getTime() - arivalTime >= 8) {
