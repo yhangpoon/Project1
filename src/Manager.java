@@ -81,7 +81,7 @@ public class Manager extends Employee {
         // Do administrative stuff until all team leads arrived
         while (!hasLeadersArrived()) {
             try {
-                wait();
+                this.wait();
             } catch (InterruptedException e) {
                 return;
             }
@@ -99,7 +99,7 @@ public class Manager extends Employee {
             System.err.print(e.toString());
         }
         available = true;
-        notifyAll();
+        this.notifyAll();
 
         while (hasArrived()) {
             // 10am - 11am Meeting (Finish answering first)
@@ -118,7 +118,7 @@ public class Manager extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                notifyAll();
+                this.notifyAll();
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
@@ -137,7 +137,7 @@ public class Manager extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                notifyAll();
+                this.notifyAll();
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
@@ -156,7 +156,7 @@ public class Manager extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                notifyAll();
+                this.notifyAll();
             }
 
             // 4:15pm Meeting in Conference room
@@ -196,7 +196,7 @@ public class Manager extends Employee {
         }
         while (!isAvailable()) {
             try {
-                wait();
+                this.wait();
             } catch (InterruptedException e) {
                 System.err.print(e.toString());
             }
