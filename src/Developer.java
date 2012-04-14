@@ -21,10 +21,11 @@ public class Developer extends Employee {
      * @param leader
      *            - Assigned Team Leader
      */
-    public Developer(Calendar time, String name) {
+    public Developer(Calendar time, String name, ConferenceRoom room) {
         this.startTime = time;
         this.arrived = false;
         this.name = name;
+        this.conferenceRoom=room;
     }
 
     /**
@@ -52,47 +53,41 @@ public class Developer extends Employee {
         Boolean hasGoneToLunch = false;
         Boolean hasGoneToMeeting = false;
         try {
+            System.out.println(getTimeInString()+" "+name + " has arrived.");
             leader.notifyArrival(this);
+            
         } catch (InterruptedException e) {
         }
         while (System.currentTimeMillis() - startTime.getTimeInMillis() < 4800 || !hasGoneToMeeting) {
             // Ask team leader a question.
-            int askQuestion = ran.nextInt(100);
+            int askQuestion = ran.nextInt(10000);
             if (askQuestion == 1) {
-                System.out.println(name + " has asked leader a question");
+                System.out.println(getTimeInString()+" "+name + " has asked leader a question");
                 leader.answerQuestion();
             }
             // Lunch
             if (!hasGoneToLunch) {
-                int goToLunch = ran.nextInt(100);
-                if (goToLunch <= 50) {
-                    System.out.println(name + " has gone to lunch");
+                int goToLunch = ran.nextInt(10000);
+                if (goToLunch == 50) {
+                    System.out.println(getTimeInString()+" "+name + " has gone to lunch");
                     int lunchTime = ran.nextInt(300) + 300;
                     try {
                         sleep(lunchTime);
-                    } catch (InterruptedException e) {
-                    } finally {
-                        hasGoneToLunch = true;
-                    }
+                    } catch (InterruptedException e) {} 
+                    hasGoneToLunch = true;
                 }
             }
 
             // Project Status meeting
             if (getTime()>= 16 && !hasGoneToMeeting) {
+                System.out.println(getTimeInString()+" "+name
+                        + " is going to project status meeting");
                 try {
-                    System.out.println(name
-                            + " is going to project status meeting");
-                    Calendar fourThirty = Calendar.getInstance();
-                    fourThirty.set(Calendar.YEAR, Calendar.MONTH,
-                            Calendar.DATE, 16, 30);
-                    while (getTime()< 4.5) {
-                        sleep(10);
-                    }
-                    hasGoneToMeeting = true;
-                } catch (InterruptedException e) {
-                }
+                    conferenceRoom.projectStatusMeeting();
+                } catch (InterruptedException e) {}
+                System.out.println(getTimeInString()+" "+name+" returned from the status meeting");
+                hasGoneToMeeting = true;
             }
         }
     }
-
 }
