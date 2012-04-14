@@ -29,7 +29,7 @@ public class TeamLeader extends Employee {
     private ConferenceRoom conferenceRoom;
     
     /**
-     * 
+     * Stores the time that the team leader arrived.
      */
     private long arivalTime;
 
@@ -137,14 +137,6 @@ public class TeamLeader extends Employee {
         }
         System.out.println(Thread.currentThread().getName()
                 + " is hard at work");
-
-        // TODO randomly ask questions
-
-        // TODO randomly decide to go to lunch
-
-        // TODO meeting at 4:00
-
-        // TODO leave after 8 Hours
     }
 
 }
