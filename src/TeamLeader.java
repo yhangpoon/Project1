@@ -67,6 +67,7 @@ public class TeamLeader extends Employee {
             if (askMan % 2 == 0) {
                 this.manager.answerQuestion();
             } else {
+                System.out.println(this.name+" has answered the question");
                 this.available = true;
             }
         } else {
@@ -115,8 +116,10 @@ public class TeamLeader extends Employee {
         
         // TODO wait random
         this.arivalTime = currentTime.getTimeInMillis();
+        System.out.println(this.name+" arrived at "+currentTime.getTimeInMillis());
         manager.notifyArrival(this);
         // TODO do manager meeting
+        System.out.println(this.name+" waits for his team to arrive");
         while (!this.hasTeamArrived()) {
             try {
                 sleep(10);
@@ -126,6 +129,7 @@ public class TeamLeader extends Employee {
             }
         }
         try {
+            System.out.println(this.name+" brings team to the conference room");
             conferenceRoom.lockRoom();
             this.endMeeting();
         } catch (InterruptedException e) {
@@ -134,13 +138,13 @@ public class TeamLeader extends Employee {
         }
         boolean atWork = true;
         boolean hadUpdateMeeting = false;
-        System.out.println("Team Leader "+Thread.currentThread().getName()
-                            +" is hard at work");
+        System.out.println(this.name+" is hard at work");
         while(atWork){
             Random rand = new Random();
             int task = rand.nextInt(10);
             
             if (available && task == 0){
+                System.out.println(this.name+" is asking the manager a question");
                 manager.answerQuestion();
             }
         
@@ -149,15 +153,17 @@ public class TeamLeader extends Employee {
             if (available && !hadUpdateMeeting && currentTime.getTimeInMillis() >= 4800) {
                 //TODO meeting at 4:00
                 try {
+                    System.out.println(this.name+" goes to update meeting");
                     conferenceRoom.projectStatusMeeting();
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
-        
-            if (hadUpdateMeeting && currentTime.getTimeInMillis() - arivalTime >= 4800) {
+            
+            if (hadUpdateMeeting && getTime().getTimeInMillis() - arivalTime >= 4800) {
                 //TODO leave after 8 Hours
+                System.out.println(this.name+"");
                 atWork = false;
             }
         }
