@@ -21,7 +21,7 @@ public class ConferenceRoom {
         this.available = new AtomicInteger(1);
     }
     
-    public void projectStatusMeeting() throws InterruptedException{
+    public synchronized void projectStatusMeeting() throws InterruptedException{
         this.wait();
     }
     
@@ -31,7 +31,7 @@ public class ConferenceRoom {
      * @return available - status of the room
      * @throws InterruptedException 
      */
-    public void lockRoom() throws InterruptedException {
+    public synchronized void lockRoom() throws InterruptedException {
         while (!this.available.compareAndSet(1, 0)) {
             this.wait();
         }

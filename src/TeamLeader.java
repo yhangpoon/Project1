@@ -59,13 +59,18 @@ public class TeamLeader extends Employee {
     /**
      * Answers Developer's question.
      */
-    public void answerQuestion() {
-        Random gen = new Random();
-        int askMan = gen.nextInt(2);
-        if (askMan % 2 == 0) {
-            this.manager.answerQuestion();
+    public synchronized void answerQuestion() {
+        if (this.available) {
+            this.available = false;
+            Random gen = new Random();
+            int askMan = gen.nextInt(10);
+            if (askMan % 2 == 0) {
+                this.manager.answerQuestion();
+            } else {
+                this.available = true;
+            }
         } else {
-            // TODO
+            this.manager.answerQuestion();
         }
     }
 
@@ -86,9 +91,13 @@ public class TeamLeader extends Employee {
      *            the developer that has arrived
      * @throws InterruptedException 
      */
-    public void notifyArrival(Developer dev) throws InterruptedException {
+    public synchronized void notifyArrival(Developer dev) throws InterruptedException {
         this.team.put(dev, true);
         this.wait();
+    }
+    
+    public synchronized void endMeeting(){
+        this.notifyAll();
     }
 
     /**
@@ -110,7 +119,7 @@ public class TeamLeader extends Employee {
         // TODO do manager meeting
         while (!this.hasTeamArrived()) {
             try {
-                this.wait(10);
+                sleep(10);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -118,25 +127,26 @@ public class TeamLeader extends Employee {
         }
         try {
             conferenceRoom.lockRoom();
-            this.notifyAll();
+            this.endMeeting();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         boolean atWork = true;
+        boolean hadUpdateMeeting = false;
         System.out.println("Team Leader "+Thread.currentThread().getName()
                             +" is hard at work");
         while(atWork){
             Random rand = new Random();
             int task = rand.nextInt(10);
             
-            if (task == 0){
+            if (available && task == 0){
                 manager.answerQuestion();
             }
         
             //TODO randomly decide to go to lunch
         
-            if (currentTime.getTimeInMillis() == 4800) {
+            if (available && !hadUpdateMeeting && currentTime.getTimeInMillis() >= 4800) {
                 //TODO meeting at 4:00
                 try {
                     conferenceRoom.projectStatusMeeting();
@@ -146,7 +156,7 @@ public class TeamLeader extends Employee {
                 }
             }
         
-            if (currentTime.getTimeInMillis() - arivalTime > 4800) {
+            if (hadUpdateMeeting && currentTime.getTimeInMillis() - arivalTime >= 4800) {
                 //TODO leave after 8 Hours
                 atWork = false;
             }
