@@ -90,5 +90,6 @@ public class Developer extends Employee {
                 hasGoneToMeeting = true;
             }
         }
+        System.out.println(getTimeInString()+" "+name+" Leaves work");
     }
 }
