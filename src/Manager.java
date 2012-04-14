@@ -38,8 +38,13 @@ public class Manager extends Employee {
     /**
      * Notify Manager the leader's arrival.
      */
-    public void notifyArrival(TeamLeader leader) {
+    public synchronized void notifyArrival(TeamLeader leader) {
         leaders.put(leader, true);
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            System.err.println(e.toString());
+        }
     }
 
     /**
@@ -54,14 +59,18 @@ public class Manager extends Employee {
      * Answers Developer's question.
      */
     public synchronized boolean answerQuestion() {
+        if (available == false) {
+            try {
+                System.out.println(getTimeInString() + " " + name
+                        + " is busy at the moment");
+                this.wait();
+            } catch (InterruptedException e) {
+                System.err.println(e.toString());
+            }
+        }
+        System.out.println(getTimeInString() + " " + name
+                + " answers a question");
         return true;
-    }
-
-    /**
-     * Gets the availability of the Manager.
-     */
-    public boolean isAvailable() {
-        return available;
     }
 
     /**
@@ -80,7 +89,7 @@ public class Manager extends Employee {
         try {
             this.wait();
         } catch (InterruptedException e) {
-            return;
+            System.err.println(e.toString());
         }
     }
 
@@ -103,9 +112,10 @@ public class Manager extends Employee {
         }
 
         // Daily 15min meeting with team leads Notify all when back
+        available = false;
+        notifyEveryone();
         System.out.println(getTimeInString() + " " + name
                 + " goes to the daily 15 minutes meeting");
-        available = false;
         try {
             Thread.sleep(150);
         } catch (InterruptedException e) {
@@ -176,20 +186,6 @@ public class Manager extends Employee {
                 System.out.println(getTimeInString() + " " + name
                         + " leaves work");
                 left();
-            }
-        }
-    }
-
-    @Override
-    public void interrupt() {
-        if (!isAvailable()) {
-            return;
-        }
-        while (!isAvailable()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                System.err.print(e.toString());
             }
         }
     }
