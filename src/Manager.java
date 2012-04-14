@@ -73,7 +73,7 @@ public class Manager extends Employee {
             }
         }
         System.out.println(getTimeInString() + " " + name
-                + " answers a question");
+                + " has answered a question");
         return true;
     }
 

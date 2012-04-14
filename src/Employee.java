@@ -54,6 +54,15 @@ abstract class Employee extends Thread {
     }
 
     /**
+     * Returns the name of the employee.
+     * 
+     * @return name of the employee
+     */
+    protected String getEmployeeName() {
+        return name;
+    }
+
+    /**
      * Return the current simulated time based on the time elapsed since the
      * beginning time.
      * 
