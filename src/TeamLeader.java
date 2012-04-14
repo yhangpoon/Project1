@@ -27,6 +27,11 @@ public class TeamLeader extends Employee {
      * The one conference room that will be used.
      */
     private ConferenceRoom conferenceRoom;
+    
+    /**
+     * 
+     */
+    private long arivalTime;
 
     /**
      * The team leader team of developers.
@@ -96,6 +101,7 @@ public class TeamLeader extends Employee {
     @Override
     public void run() {
         // TODO wait random
+        this.arivalTime = currentTime.getTimeInMillis();
         manager.notifyArrival(this);
         // TODO do manager meeting
         while (!this.hasTeamArrived()){
@@ -121,9 +127,13 @@ public class TeamLeader extends Employee {
         
         //TODO randomly decide to go to lunch
         
-        //TODO meeting at 4:00
+        if (currentTime.getTimeInMillis() == 4800) {
+            //TODO meeting at 4:00
+        }
         
-        //TODO leave after 8 Hours
+        if (currentTime.getTimeInMillis() - arivalTime > 4800) {
+            //TODO leave after 8 Hours
+        }
     }
 
 }
