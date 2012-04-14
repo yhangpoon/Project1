@@ -51,6 +51,10 @@ public class TeamLeader extends Employee {
             this.team.put(devs.get(i), false);
         }
     }
+    
+    public void setManager(Manager man){
+        this.manager = man;
+    }
 
     /**
      * Answers Developer's question.
