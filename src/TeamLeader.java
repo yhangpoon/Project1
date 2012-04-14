@@ -24,11 +24,6 @@ public class TeamLeader extends Employee {
     private Manager manager;
     
     /**
-     * The one conference room that will be used.
-     */
-    private ConferenceRoom conferenceRoom;
-    
-    /**
      * Stores the time that the team leader arrived.
      */
     private long arivalTime;
@@ -45,8 +40,9 @@ public class TeamLeader extends Employee {
      *            - The assigned project manager
      */
     public TeamLeader(Calendar time, List<Developer> devs,
-            ConferenceRoom confRoom) {
+            ConferenceRoom confRoom, String id) {
         super.startTime = time;
+        super.name = id;
         this.conferenceRoom = confRoom;
         currentTime = Calendar.getInstance();
         currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
@@ -54,6 +50,10 @@ public class TeamLeader extends Employee {
         for (int i = 0; i < devs.size(); i++) {
             this.team.put(devs.get(i), false);
         }
+    }
+    
+    public void setManager(Manager man){
+        this.manager = man;
     }
 
     /**
@@ -118,6 +118,7 @@ public class TeamLeader extends Employee {
         }
         try {
             conferenceRoom.lockRoom();
+            this.notifyAll();
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -126,16 +127,28 @@ public class TeamLeader extends Employee {
         System.out.println("Team Leader "+Thread.currentThread().getName()
                             +" is hard at work");
         while(atWork){
-            //TODO randomly ask questions
+            Random rand = new Random();
+            int task = rand.nextInt(10);
+            
+            if (task == 0){
+                manager.answerQuestion();
+            }
         
             //TODO randomly decide to go to lunch
         
             if (currentTime.getTimeInMillis() == 4800) {
                 //TODO meeting at 4:00
+                try {
+                    conferenceRoom.projectStatusMeeting();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         
             if (currentTime.getTimeInMillis() - arivalTime > 4800) {
                 //TODO leave after 8 Hours
+                atWork = false;
             }
         }
     }
