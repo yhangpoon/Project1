@@ -52,10 +52,12 @@ public class Developer extends Employee {
     public void run() {
        Random ran = new Random();
        Boolean hasGoneToLunch=false;
+       Boolean hasGoneToMeeting=false;
        try{
            leader.notifyArrival(this);
        }catch(InterruptedException e){}
-       while(true){
+       long begin = System.currentTimeMillis();
+       while(System.currentTimeMillis()-begin< 4800 && hasGoneToMeeting){
            
            // Ask team leader a question.
            int askQuestion=ran.nextInt(100);
@@ -72,17 +74,21 @@ public class Developer extends Employee {
                    try {
                     sleep(lunchTime);
                 } catch (InterruptedException e) {}
+                   finally{
+                       hasGoneToLunch=true;
+                   }
                }
            }
            
            // Project Status meeting
            if(getTime().get(Calendar.HOUR_OF_DAY)==4){
                try{
-                   System.out.println("Developer"+name+" going to project status meeting");
+                   System.out.println("Developer"+name+" is going to project status meeting");
                    Calendar fourThirty = Calendar.getInstance();
                    fourThirty.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 16, 30);
                    long sleepTime=fourThirty.getTimeInMillis()-getTime().getTimeInMillis();
                    sleep(sleepTime);
+                   hasGoneToMeeting=true;
                }catch(InterruptedException e){}
            }
        }
