@@ -55,8 +55,7 @@ public class Developer extends Employee {
             leader.notifyArrival(this);
         } catch (InterruptedException e) {
         }
-        long begin = System.currentTimeMillis();
-        while (System.currentTimeMillis() - begin < 4800 || !hasGoneToMeeting) {
+        while (System.currentTimeMillis() - startTime.getTimeInMillis() < 4800 || !hasGoneToMeeting) {
             // Ask team leader a question.
             int askQuestion = ran.nextInt(100);
             if (askQuestion == 1) {
@@ -79,15 +78,14 @@ public class Developer extends Employee {
             }
 
             // Project Status meeting
-            if (getTime().get(Calendar.HOUR_OF_DAY) >= 16
-                    && !hasGoneToMeeting) {
+            if (getTime()>= 16 && !hasGoneToMeeting) {
                 try {
                     System.out.println(name
                             + " is going to project status meeting");
                     Calendar fourThirty = Calendar.getInstance();
                     fourThirty.set(Calendar.YEAR, Calendar.MONTH,
                             Calendar.DATE, 16, 30);
-                    while (getTime().get(Calendar.MINUTE) < 30) {
+                    while (getTime()< 4.5) {
                         sleep(10);
                     }
                     hasGoneToMeeting = true;
