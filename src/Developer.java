@@ -55,7 +55,7 @@ public class Developer extends Employee {
         try {
             sleep(ran.nextInt(300));
             System.out.println(getTimeInString() + " " + name
-                    + " arrived at the company");
+                    + " arrives at the company");
             leader.notifyArrival(this);
 
         } catch (InterruptedException e) {
@@ -65,9 +65,8 @@ public class Developer extends Employee {
             // Ask team leader a question.
             int askQuestion = ran.nextInt(400000);
             if (askQuestion == 1) {
-                System.out.println(getTimeInString() + " " + name
-                        + " has asked " + leader.getEmployeeName()
-                        + " a question");
+                System.out.println(getTimeInString() + " " + name + " askes "
+                        + leader.getEmployeeName() + " a question");
                 leader.answerQuestion();
             }
             // Lunch
@@ -75,7 +74,7 @@ public class Developer extends Employee {
                 int goToLunch = ran.nextInt(200000);
                 if (goToLunch == 1) {
                     System.out.println(getTimeInString() + " " + name
-                            + " has gone to lunch");
+                            + " goes to lunch");
                     int lunchTime = ran.nextInt(300) + 300;
                     try {
                         sleep(lunchTime);
@@ -88,7 +87,7 @@ public class Developer extends Employee {
             // Project Status meeting
             if (getTime() >= 16 && !hasGoneToMeeting) {
                 System.out.println(getTimeInString() + " " + name
-                        + " is going to project status meeting");
+                        + " goes to the project status meeting");
                 try {
                     conferenceRoom.projectStatusMeeting();
                 } catch (InterruptedException e) {
@@ -100,6 +99,6 @@ public class Developer extends Employee {
             sleep(ran.nextInt(280));
         } catch (InterruptedException e) {
         }
-        System.out.println(getTimeInString() + " " + name + " Leaves work");
+        System.out.println(getTimeInString() + " " + name + " leaves work");
     }
 }
