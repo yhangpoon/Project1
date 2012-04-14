@@ -21,6 +21,8 @@ public class Main {
 
         Calendar time = Calendar.getInstance();
 
+        ConferenceRoom room = new ConferenceRoom();
+
         Developer developer1 = new Developer(time);
         Developer developer2 = new Developer(time);
         Developer developer3 = new Developer(time);
@@ -28,7 +30,7 @@ public class Main {
         developers1.add(developer1);
         developers1.add(developer2);
         developers1.add(developer3);
-        TeamLeader leader1 = new TeamLeader(time, developers1);
+        TeamLeader leader1 = new TeamLeader(time, developers1, room);
 
         Developer developer4 = new Developer(time);
         Developer developer5 = new Developer(time);
@@ -37,7 +39,7 @@ public class Main {
         developers2.add(developer4);
         developers2.add(developer5);
         developers2.add(developer6);
-        TeamLeader leader2 = new TeamLeader(time, developers2);
+        TeamLeader leader2 = new TeamLeader(time, developers2, room);
 
         Developer developer7 = new Developer(time);
         Developer developer8 = new Developer(time);
@@ -46,13 +48,13 @@ public class Main {
         developers3.add(developer7);
         developers3.add(developer8);
         developers3.add(developer9);
-        TeamLeader leader3 = new TeamLeader(time, developers3);
+        TeamLeader leader3 = new TeamLeader(time, developers3, room);
 
         List<TeamLeader> leaders = new ArrayList<TeamLeader>();
         leaders.add(leader1);
         leaders.add(leader2);
         leaders.add(leader3);
-        Manager manager = new Manager(time, leaders);
+        Manager manager = new Manager(time, leaders, room);
 
         manager.start();
 
