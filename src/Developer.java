@@ -53,6 +53,7 @@ public class Developer extends Employee {
         Boolean hasGoneToLunch = false;
         Boolean hasGoneToMeeting = false;
         try {
+            sleep(ran.nextInt(300));
             System.out.println(getTimeInString()+" "+name + " has arrived.");
             leader.notifyArrival(this);
             
@@ -60,14 +61,14 @@ public class Developer extends Employee {
         }
         while (System.currentTimeMillis() - startTime.getTimeInMillis() < 4800 || !hasGoneToMeeting) {
             // Ask team leader a question.
-            int askQuestion = ran.nextInt(10000);
+            int askQuestion = ran.nextInt(100000);
             if (askQuestion == 1) {
                 System.out.println(getTimeInString()+" "+name + " has asked leader a question");
                 leader.answerQuestion();
             }
             // Lunch
             if (!hasGoneToLunch) {
-                int goToLunch = ran.nextInt(10000);
+                int goToLunch = ran.nextInt(100000);
                 if (goToLunch == 50) {
                     System.out.println(getTimeInString()+" "+name + " has gone to lunch");
                     int lunchTime = ran.nextInt(300) + 300;
