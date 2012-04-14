@@ -71,49 +71,122 @@ public class Manager extends Employee {
     @Override
     public void run() {
 
+        // Manager Status
+        boolean inMeeting = false;
+
         if (startTime != null) {
             arrived();
         }
 
-        while (hasArrived()) {
+        // Do administrative stuff until all team leads arrived
+        while (!hasLeadersArrived()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.err.print(e.toString());
+            }
+        }
 
-            // Do administrative stuff until all team leads arrived
-            while (!hasLeadersArrived()) {
+        // Daily 15min meeting with team leads Notify all when back
+        Long time = Calendar.getInstance().getTimeInMillis()
+                - startTime.getTimeInMillis();
+        System.out.println(((time / 600 + 8) % 12)
+                + ": Manager goes to the daily 15 minutes meeting");
+        available = false;
+        try {
+            Thread.sleep(150);
+        } catch (InterruptedException e) {
+            System.err.print(e.toString());
+        }
+        available = true;
+        notifyAll();
+
+        while (hasArrived()) {
+            // 10am - 11am Meeting (Finish answering first)
+            if (Calendar.getInstance().getTimeInMillis()
+                    - startTime.getTimeInMillis() >= 1200
+                    && Calendar.getInstance().getTimeInMillis()
+                            - startTime.getTimeInMillis() < 1800) {
+                Long current = Calendar.getInstance().getTimeInMillis()
+                        - startTime.getTimeInMillis();
+                System.out.println(((current / 600 + 8) % 12)
+                        + ": Manager goes to the executive meeting");
+                available = false;
                 try {
-                    wait();
+                    Thread.sleep(600);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    System.err.print(e.toString());
                 }
+                available = true;
+                notifyAll();
             }
 
-            // Daily 15min meeting with team leads Notify all when back
+            // 12pm - 1pm Lunch (Finish answering first)
+            if (Calendar.getInstance().getTimeInMillis()
+                    - startTime.getTimeInMillis() >= 2400
+                    && Calendar.getInstance().getTimeInMillis()
+                            - startTime.getTimeInMillis() < 3000) {
+                Long current = Calendar.getInstance().getTimeInMillis()
+                        - startTime.getTimeInMillis();
+                System.out.println(((current / 600 + 8) % 12)
+                        + ": Manager goes to lunch");
+                available = false;
+                try {
+                    Thread.sleep(600);
+                } catch (InterruptedException e) {
+                    System.err.print(e.toString());
+                }
+                available = true;
+                notifyAll();
+            }
 
-            // 10am - 11am Meeting (Finish answering first) Notify all when back
-            // 12pm - 1pm Lunch (Finish answering first) Notify all when back
-            // 2pm - 3pm Meeting (Finish answering first) Notify all when back
+            // 2pm - 3pm Meeting (Finish answering first)
+            if (Calendar.getInstance().getTimeInMillis()
+                    - startTime.getTimeInMillis() >= 3600
+                    && Calendar.getInstance().getTimeInMillis()
+                            - startTime.getTimeInMillis() < 4200) {
+                Long current = Calendar.getInstance().getTimeInMillis()
+                        - startTime.getTimeInMillis();
+                System.out.println(((current / 600 + 8) % 12)
+                        + ": Manager goes to the executive meeting");
+                available = false;
+                try {
+                    Thread.sleep(600);
+                } catch (InterruptedException e) {
+                    System.err.print(e.toString());
+                }
+                available = true;
+                notifyAll();
+            }
+
             // 4:15pm Meeting in Conference room
+            if (Calendar.getInstance().getTimeInMillis()
+                    - startTime.getTimeInMillis() >= 4950
+                    && inMeeting == false) {
+                Long current = Calendar.getInstance().getTimeInMillis()
+                        - startTime.getTimeInMillis();
+                System.out.println(((current / 600 + 8) % 12)
+                        + ": Manager goes to the project status meeting");
+                available = false;
+                inMeeting = true;
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    System.err.print(e.toString());
+                }
+                available = true;
+                notifyAll();
+            }
+
             // 5pm Leave
+            if (Calendar.getInstance().getTimeInMillis()
+                    - startTime.getTimeInMillis() >= 5400) {
+                Long current = Calendar.getInstance().getTimeInMillis()
+                        - startTime.getTimeInMillis();
+                System.out.println(((current / 600 + 8) % 12)
+                        + ": Manager leaves work");
+                left();
+            }
         }
-
-        try {
-            conferenceRoom.lockRoom();
-            // TODO tell team to go to the conference room
-            conferenceRoom.useRoom();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        conferenceRoom.releaseRoom();
-        System.out.println(Thread.currentThread().getName()
-                + " is hard at work");
-
-        // TODO randomly ask questions
-
-        // TODO randomly decide to go to lunch
-
-        // TODO meeting at 4:00
-
-        // TODO leave after 8 Hours
     }
 }
