@@ -57,19 +57,18 @@ public class Developer extends Employee {
            leader.notifyArrival(this);
        }catch(InterruptedException e){}
        long begin = System.currentTimeMillis();
-       while(System.currentTimeMillis()-begin< 4800 && hasGoneToMeeting){
-           
+       while(System.currentTimeMillis()-begin< 4800 || !hasGoneToMeeting){  
            // Ask team leader a question.
            int askQuestion=ran.nextInt(100);
-           if (askQuestion<=10){
-               System.out.println("Developer"+name+" has asked leader a question");
+           if (askQuestion==1){
+               System.out.println(name+" has asked leader a question");
                leader.answerQuestion();
            }
            // Lunch
            if(!hasGoneToLunch){
                int goToLunch=ran.nextInt(100);
                if(goToLunch<=50){
-                   System.out.println("Developer"+name+" has gone to lunch");
+                   System.out.println(name+" has gone to lunch");
                    int lunchTime=ran.nextInt(300)+300;
                    try {
                     sleep(lunchTime);
@@ -81,13 +80,14 @@ public class Developer extends Employee {
            }
            
            // Project Status meeting
-           if(getTime().get(Calendar.HOUR_OF_DAY)==4){
+           if(getTime().get(Calendar.HOUR_OF_DAY)>=16 && !hasGoneToMeeting){
                try{
-                   System.out.println("Developer"+name+" is going to project status meeting");
+                   System.out.println(name+" is going to project status meeting");
                    Calendar fourThirty = Calendar.getInstance();
                    fourThirty.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 16, 30);
-                   long sleepTime=fourThirty.getTimeInMillis()-getTime().getTimeInMillis();
-                   sleep(sleepTime);
+                   while(getTime().get(Calendar.MINUTE)<30){
+                       sleep(10);
+                   }
                    hasGoneToMeeting=true;
                }catch(InterruptedException e){}
            }
