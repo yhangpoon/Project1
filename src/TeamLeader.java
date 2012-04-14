@@ -67,18 +67,18 @@ public class TeamLeader extends Employee {
                 System.out.println(getTimeInString() + " " + this.name
                         + " cant answer the question");
                 System.out.println(getTimeInString() + " " + this.name
-                        + " has asked " + manager.getEmployeeName()
+                        + " asks " + manager.getEmployeeName()
                         + " the question");
                 this.manager.answerQuestion();
                 this.available = true;
             } else {
                 System.out.println(getTimeInString() + ":" + this.name
-                        + " has answered the question");
+                        + " answers the question");
                 this.available = true;
             }
         } else {
             System.out.println(getTimeInString() + ":" + this.name
-                    + " was not available");
+                    + " is not available");
             this.manager.answerQuestion();
         }
     }

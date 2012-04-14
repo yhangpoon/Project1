@@ -20,16 +20,17 @@ public class ConferenceRoom {
     public ConferenceRoom() {
         this.available = new AtomicInteger(1);
     }
-    
-    public synchronized void projectStatusMeeting() throws InterruptedException{
+
+    public synchronized void projectStatusMeeting()
+            throws InterruptedException {
         this.wait();
     }
-    
+
     /**
      * Return the status of the conference room.
      * 
      * @return available - status of the room
-     * @throws InterruptedException 
+     * @throws InterruptedException
      */
     public synchronized void lockRoom() throws InterruptedException {
         while (!this.available.compareAndSet(1, 0)) {

@@ -23,9 +23,9 @@ public class Main {
 
         ConferenceRoom room = new ConferenceRoom();
 
-        Developer developer1 = new Developer(time, "Developer 1",room);
-        Developer developer2 = new Developer(time, "Developer 2",room);
-        Developer developer3 = new Developer(time, "Developer 3",room);
+        Developer developer1 = new Developer(time, "Developer 1", room);
+        Developer developer2 = new Developer(time, "Developer 2", room);
+        Developer developer3 = new Developer(time, "Developer 3", room);
         List<Developer> developers1 = new ArrayList<Developer>();
         developers1.add(developer1);
         developers1.add(developer2);
@@ -36,9 +36,9 @@ public class Main {
             developer.setLeader(leader1);
         }
 
-        Developer developer4 = new Developer(time, "Developer 4",room);
-        Developer developer5 = new Developer(time, "Developer 5",room);
-        Developer developer6 = new Developer(time, "Developer 6",room);
+        Developer developer4 = new Developer(time, "Developer 4", room);
+        Developer developer5 = new Developer(time, "Developer 5", room);
+        Developer developer6 = new Developer(time, "Developer 6", room);
         List<Developer> developers2 = new ArrayList<Developer>();
         developers2.add(developer4);
         developers2.add(developer5);
@@ -49,9 +49,9 @@ public class Main {
             developer.setLeader(leader2);
         }
 
-        Developer developer7 = new Developer(time, "Developer 7",room);
-        Developer developer8 = new Developer(time, "Developer 8",room);
-        Developer developer9 = new Developer(time, "Developer 9",room);
+        Developer developer7 = new Developer(time, "Developer 7", room);
+        Developer developer8 = new Developer(time, "Developer 8", room);
+        Developer developer9 = new Developer(time, "Developer 9", room);
         List<Developer> developers3 = new ArrayList<Developer>();
         developers3.add(developer7);
         developers3.add(developer8);
