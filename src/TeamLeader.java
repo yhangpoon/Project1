@@ -24,11 +24,6 @@ public class TeamLeader extends Employee {
     private Manager manager;
     
     /**
-     * The one conference room that will be used.
-     */
-    private ConferenceRoom conferenceRoom;
-    
-    /**
      * Stores the time that the team leader arrived.
      */
     private long arivalTime;
