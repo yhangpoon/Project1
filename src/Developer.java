@@ -61,15 +61,15 @@ public class Developer extends Employee {
         }
         while (System.currentTimeMillis() - startTime.getTimeInMillis() < 4800 || !hasGoneToMeeting) {
             // Ask team leader a question.
-            int askQuestion = ran.nextInt(100000);
+            int askQuestion = ran.nextInt(400000);
             if (askQuestion == 1) {
                 System.out.println(getTimeInString()+" "+name + " has asked leader a question");
                 leader.answerQuestion();
             }
             // Lunch
             if (!hasGoneToLunch) {
-                int goToLunch = ran.nextInt(100000);
-                if (goToLunch == 50) {
+                int goToLunch = ran.nextInt(400000);
+                if (goToLunch == 1) {
                     System.out.println(getTimeInString()+" "+name + " has gone to lunch");
                     int lunchTime = ran.nextInt(300) + 300;
                     try {
