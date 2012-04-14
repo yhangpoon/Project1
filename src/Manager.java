@@ -77,6 +77,10 @@ public class Manager extends Employee {
      * Manager working.
      */
     private synchronized void working() {
+        Long time = Calendar.getInstance().getTimeInMillis()
+                - startTime.getTimeInMillis();
+        System.out.println(((time / 600 + 8) % 12) + ": " + name
+                + " is looking at porn!");
         try {
             this.wait();
         } catch (InterruptedException e) {
