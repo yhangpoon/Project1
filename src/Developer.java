@@ -21,12 +21,12 @@ public class Developer extends Employee {
      * @param leader
      *            - Assigned Team Leader
      */
-    public Developer(Calendar time, Integer id) {
+    public Developer(Calendar time, String name) {
         currentTime = Calendar.getInstance();
         currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         this.startTime = time;
         this.arrived = false;
-        this.name=id.toString();
+        this.name=name;
     }
 
     /**
