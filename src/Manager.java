@@ -30,8 +30,6 @@ public class Manager extends Employee {
         this.name = name;
         this.startTime = time;
         this.conferenceRoom = conferenceRoom;
-        currentTime = Calendar.getInstance();
-        currentTime.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 8, 0);
         for (TeamLeader leader : leaders) {
             this.leaders.put(leader, false);
         }

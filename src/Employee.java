@@ -21,15 +21,10 @@ abstract class Employee extends Thread {
     protected Calendar startTime;
 
     /**
-     * The simulated time based upon the startTime and the current time.
-     */
-    protected Calendar currentTime;
-
-    /**
      * The one conference room that will be used.
      */
     protected ConferenceRoom conferenceRoom;
-    
+
     /**
      * The name of the employee.
      */
@@ -64,16 +59,13 @@ abstract class Employee extends Thread {
      * 
      * @return The current simulated time in a Calendar object
      */
-    protected Calendar getTime() {
-        Calendar currentCalendar = Calendar.getInstance();
-        int simulatedTime = (int) ((currentCalendar.getTimeInMillis() - startTime
-                .getTimeInMillis()) / 10);
+    protected Long getTime() {
+        Long time = (Long) (Calendar.getInstance().getTimeInMillis() - startTime
+                .getTimeInMillis());
 
-        simulatedTime = simulatedTime * 60 * 1000;
+        time = time / 600 + 8;
 
-        currentTime.setTimeInMillis(simulatedTime
-                + currentTime.getTimeInMillis());
-        return currentTime;
+        return time;
     }
 
     @Override
