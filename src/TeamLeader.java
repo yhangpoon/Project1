@@ -48,6 +48,7 @@ public class TeamLeader extends Employee {
         for (int i = 0; i < devs.size(); i++) {
             this.team.put(devs.get(i), false);
         }
+        this.available = true;
     }
     
     public void setManager(Manager man){
@@ -63,12 +64,15 @@ public class TeamLeader extends Employee {
             Random gen = new Random();
             int askMan = gen.nextInt(10);
             if (askMan % 2 == 0) {
+                System.out.println(this.name+" cant answer the question");
                 this.manager.answerQuestion();
+                this.available = true;
             } else {
                 System.out.println(this.name+" has answered the question");
                 this.available = true;
             }
         } else {
+            System.out.println(this.name+" was not available");
             this.manager.answerQuestion();
         }
     }
@@ -111,10 +115,15 @@ public class TeamLeader extends Employee {
      */
     @Override
     public void run() {
-        
-        // TODO wait random
+        Random rand = new Random();
+        try {
+            sleep(rand.nextInt(300));
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         this.arivalTime = getTime();
-        System.out.println(this.name+" arrived at "+this.arivalTime);
+        System.out.println(this.name+" arrived at "+getTimeInString());
         manager.notifyArrival(this);
         // TODO do manager meeting
         System.out.println(this.name+" waits for his team to arrive");
@@ -139,22 +148,33 @@ public class TeamLeader extends Employee {
         boolean ateLunch = false;
         System.out.println(this.name+" is hard at work");
         while(atWork){
-            Random rand = new Random();
-            int task = rand.nextInt(10);
+            int task = rand.nextInt(10000);
             
-            if (available && task == 0){
-                System.out.println(this.name+" is asking the manager a question");
-                manager.answerQuestion();
-            }
-        
-            //TODO randomly decide to go to lunch
-            
-            //check to see if its time for the update meeting.
+          //check to see if its time for the update meeting.
             if (available && !hadUpdateMeeting && getTime() >= 16) {
                 //TODO meeting at 4:00
                 System.out.println(this.name+" goes to update meeting");
                 try {
                     conferenceRoom.projectStatusMeeting();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            
+            //asking questions
+            if (available && task < 1){
+                System.out.println(this.name+" is asking the manager a question");
+                manager.answerQuestion();
+            }
+        
+            //TODO randomly decide to go to lunch
+            if (!ateLunch && available && task>300 && task<2000 ){
+                System.out.println(getTimeInString()+";"+this.name
+                        +" went to lunch at");
+                ateLunch = true;
+                try {
+                    sleep(30 + rand.nextInt(31));
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
