@@ -40,14 +40,11 @@ public class Manager extends Employee {
      */
     public synchronized void notifyArrival(TeamLeader leader) {
         leaders.put(leader, true);
-        if (!hasLeadersArrived()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                System.err.println(e.toString());
-            }
-        } else {
-            notifyEveryone();
+
+        try {
+            this.wait();
+        } catch (InterruptedException e) {
+            System.err.println(e.toString());
         }
     }
 
@@ -88,10 +85,8 @@ public class Manager extends Employee {
      * Manager working.
      */
     private synchronized void working() {
-        System.out.println(getTimeInString() + " " + name
-                + " surfs the internet");
         try {
-            this.wait();
+            this.wait(10);
         } catch (InterruptedException e) {
             System.err.println(e.toString());
         }
@@ -113,6 +108,8 @@ public class Manager extends Employee {
         }
 
         // Do administrative stuff until all team leads arrived
+        System.out.println(getTimeInString() + " " + name
+                + " surfs the internet");
         while (!hasLeadersArrived()) {
             working();
         }
@@ -121,7 +118,6 @@ public class Manager extends Employee {
         available = false;
         System.out.println(getTimeInString() + " " + name
                 + " goes to the daily 15 minutes meeting");
-        notifyEveryone();
         try {
             Thread.sleep(150);
         } catch (InterruptedException e) {

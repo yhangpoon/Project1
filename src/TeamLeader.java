@@ -164,7 +164,7 @@ public class TeamLeader extends Employee {
             int task = rand.nextInt(600000);
 
             // check to see if its time for the update meeting.
-            if (available && !hadUpdateMeeting && getTime() >= 16) {
+            if (this.available && !hadUpdateMeeting && getTime() >= 16) {
                 // TODO meeting at 4:00
                 System.out.println(getTimeInString() + " " + this.name
                         + " goes to update meeting");
@@ -178,7 +178,7 @@ public class TeamLeader extends Employee {
             }
 
             // asking questions
-            if (available && task < 1) {
+            if (this.available && task < 1) {
                 System.out.println(getTimeInString() + " " + this.name
                         + " askes " + manager.getEmployeeName()
                         + " the question");
@@ -186,8 +186,8 @@ public class TeamLeader extends Employee {
             }
 
             // TODO randomly decide to go to lunch
-            if (!ateLunch && available && task > 3 && task < 10) {
-                available = false;
+            if (!ateLunch && this.available && task > 3 && task < 10) {
+                this.available = false;
                 System.out.println(getTimeInString() + " " + this.name
                         + " goes to lunch");
 
@@ -198,7 +198,7 @@ public class TeamLeader extends Employee {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                available = true;
+                this.available = true;
             }
 
             if (hadUpdateMeeting && getTime() - arivalTime >= 8) {
