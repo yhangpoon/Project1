@@ -83,7 +83,7 @@ public class Manager extends Employee {
             try {
                 wait();
             } catch (InterruptedException e) {
-                System.err.print(e.toString());
+                return;
             }
         }
 
@@ -170,12 +170,11 @@ public class Manager extends Employee {
                 available = false;
                 inMeeting = true;
                 try {
-                    Thread.sleep(150);
+                    conferenceRoom.lockRoom();
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
                 }
                 available = true;
-                notifyAll();
             }
 
             // 5pm Leave
@@ -186,6 +185,20 @@ public class Manager extends Employee {
                 System.out.println(((current / 600 + 8) % 12)
                         + ": Manager leaves work");
                 left();
+            }
+        }
+    }
+
+    @Override
+    public void interrupt() {
+        if (!isAvailable()) {
+            return;
+        }
+        while (!isAvailable()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.err.print(e.toString());
             }
         }
     }
