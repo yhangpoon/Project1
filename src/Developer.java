@@ -79,7 +79,10 @@ public class Developer extends Employee {
            if(getTime().get(Calendar.HOUR_OF_DAY)==4){
                try{
                    System.out.println("Developer"+name+" going to project status meeting");
-                   leader.wait();
+                   Calendar fourThirty = Calendar.getInstance();
+                   fourThirty.set(Calendar.YEAR, Calendar.MONTH, Calendar.DATE, 16, 30);
+                   long sleepTime=fourThirty.getTimeInMillis()-getTime().getTimeInMillis();
+                   sleep(sleepTime);
                }catch(InterruptedException e){}
            }
        }
