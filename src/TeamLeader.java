@@ -49,11 +49,12 @@ public class TeamLeader extends Employee {
         this.waitingTime = 0l;
         this.meetingTime = 0l;
     }
-    
+
     /**
      * Sets the manager for this team leader.
      * 
-     * @param man the one project manager for the company
+     * @param man
+     *            the one project manager for the company
      */
     public void setManager(Manager man) {
         this.manager = man;
@@ -115,8 +116,7 @@ public class TeamLeader extends Employee {
     }
 
     /**
-<<<<<<< HEAD
-     * Gets the availability of the Leader.
+     * <<<<<<< HEAD Gets the availability of the Leader.
      */
     public boolean isAvailable() {
         return available;
@@ -215,7 +215,7 @@ public class TeamLeader extends Employee {
 
                 ateLunch = true;
                 try {
-                    this.lunchTime = 30 + rand.nextInt(31);
+                    this.lunchTime = 300 + rand.nextInt(300);
                     sleep(this.lunchTime);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
