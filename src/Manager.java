@@ -132,6 +132,8 @@ public class Manager extends Employee {
             available = true;
             notifyEveryone();
         }
+        System.out.println(getTimeInString() + " " + name
+                + " finishes the daily 15 minutes meeting");
         meetingTime += getTime() - eventStartTime;
 
         for (TeamLeader leader : leaders.keySet()) {
