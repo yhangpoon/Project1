@@ -25,6 +25,8 @@ public class Developer extends Employee {
         this.lunchTime = 0l;
         this.waitingTime = 0l;
         this.meetingTime = 0l;
+        this.workingTime = 0l;
+        this.officeTime = 0l;
         this.arrived = false;
         this.name = name;
         this.startTime = time;
