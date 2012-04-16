@@ -92,7 +92,7 @@ public class Developer extends Employee {
             }
 
             // Project Status meeting
-            if (getTime() >= 16 && !hasGoneToMeeting) {
+            if (getTime() >= 4800 && !hasGoneToMeeting) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
                 try {
@@ -108,7 +108,8 @@ public class Developer extends Employee {
             sleep(ran.nextInt(280));
         } catch (InterruptedException e) {
         }
-        officeTime = System.currentTimeMillis() - arrivalTime;
+
+        officeTime = getTime() - arrivalTime;
         System.out.println(getTimeInString() + " " + name + " leaves work");
     }
 }
