@@ -88,7 +88,7 @@ public class Main {
 
         // Wait for the day to end
         try {
-            Thread.sleep(5500);
+            Thread.sleep(6000);
         } catch (InterruptedException e) {
             System.err.println(e.toString());
         }

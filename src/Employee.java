@@ -108,11 +108,13 @@ abstract class Employee extends Thread {
 
     public String getStatistics() {
         String statistics = "";
-        workingTime = officeTime - lunchTime - meetingTime - waitingTime;
-        statistics += "Time spent working: " + workingTime + "\n";
-        statistics += "Time spent at lunch: " + lunchTime + "\n";
-        statistics += "Time spent in meetings: " + meetingTime + "\n";
-        statistics += "Time spent waiting: " + waitingTime + "\n";
+        workingTime = (officeTime - lunchTime - meetingTime - waitingTime) / 10;
+        statistics += "Employee: " + name + "\n";
+        statistics += "Time spent working: " + workingTime + "mins \n";
+        statistics += "Time spent at lunch: " + lunchTime / 10 + "mins \n";
+        statistics += "Time spent in meetings: " + meetingTime / 10
+                + "mins \n";
+        statistics += "Time spent waiting: " + waitingTime / 10 + "mins \n";
         return statistics;
     }
 
