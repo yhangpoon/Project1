@@ -67,18 +67,18 @@ public class TeamLeader extends Employee {
                 System.out.println(getTimeInString() + " " + this.name
                         + " cant answer the question");
                 System.out.println(getTimeInString() + " " + this.name
-                        + " has asked " + manager.getEmployeeName()
+                        + " asks " + manager.getEmployeeName()
                         + " the question");
                 this.manager.answerQuestion();
                 this.available = true;
             } else {
                 System.out.println(getTimeInString() + ":" + this.name
-                        + " has answered the question");
+                        + " answers the question");
                 this.available = true;
             }
         } else {
             System.out.println(getTimeInString() + ":" + this.name
-                    + " was not available");
+                    + " is not available");
             this.manager.answerQuestion();
         }
     }
@@ -111,13 +111,6 @@ public class TeamLeader extends Employee {
     }
 
     /**
-     * Gets the availability of the Leader.
-     */
-    public boolean isAvailable() {
-        return available;
-    }
-
-    /**
      * Override for the run method in the Thread class.
      */
     @Override
@@ -126,14 +119,13 @@ public class TeamLeader extends Employee {
         try {
             sleep(rand.nextInt(300));
         } catch (InterruptedException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            System.err.println(e1.toString());
         }
         this.arivalTime = getTime();
         System.out.println(getTimeInString() + " " + this.name
                 + " arrives at the company");
         manager.notifyArrival(this);
-        // TODO do manager meeting
+
         System.out.println(getTimeInString() + " " + this.name
                 + " waits for team members to arrive");
         while (!this.hasTeamArrived()) {
