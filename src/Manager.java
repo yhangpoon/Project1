@@ -27,12 +27,11 @@ public class Manager extends Employee {
      */
     public Manager(Calendar time, List<TeamLeader> leaders,
             ConferenceRoom conferenceRoom, String name) {
-        this.arrivalTime = time.getTimeInMillis();
         this.startTime = time;
-        this.lunchTime = 0l;
-        this.meetingTime = 0l;
-        this.workingTime = 0l;
-        this.officeTime = 0l;
+        this.lunchTime = 0;
+        this.meetingTime = 0;
+        this.workingTime = 0;
+        this.officeTime = 0;
         this.name = name;
         this.conferenceRoom = conferenceRoom;
         for (TeamLeader leader : leaders) {
@@ -109,6 +108,7 @@ public class Manager extends Employee {
         boolean inMeeting = false;
 
         if (startTime != null) {
+            arrivalTime = getTime();
             arrived();
             System.out.println(getTimeInString() + " " + name
                     + " arrives at the company");
@@ -122,32 +122,32 @@ public class Manager extends Employee {
         }
 
         // Daily 15min meeting with team leads Notify all when back
-        arrival = getTime();
         available = false;
         System.out.println(getTimeInString() + " " + name
                 + " goes to the daily 15 minutes meeting");
         try {
+            arrival = getTime();
             Thread.sleep(150);
+            meetingTime += getTime() - arrival;
         } catch (InterruptedException e) {
             System.err.print(e.toString());
         }
-        meetingTime += getTime() - arrival;
         available = true;
         notifyEveryone();
 
         while (hasArrived()) {
             // 10am - 11am Meeting (Finish answering first)
             if (getTime() >= 1200 && getTime() < 1800) {
-                arrival = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
                 available = false;
                 try {
+                    arrival = getTime();
                     Thread.sleep(600);
+                    meetingTime += getTime() - arrival;
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
                 }
-                meetingTime += getTime() - arrival;
                 available = true;
                 notifyEveryone();
             }
@@ -201,9 +201,10 @@ public class Manager extends Employee {
             }
 
             // 5pm Leave
-            if (getTime() >= 17) {
+            if (getTime() >= 5400) {
                 System.out.println(getTimeInString() + " " + name
                         + " leaves work");
+                this.officeTime = getTime() - arrivalTime;
                 left();
             }
         }

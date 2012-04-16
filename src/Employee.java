@@ -110,6 +110,8 @@ abstract class Employee extends Thread {
         String statistics = "";
         workingTime = (officeTime - lunchTime - meetingTime - waitingTime);
         statistics += "Employee: " + name + "\n";
+        statistics += "Total Time in Office: " + (officeTime) / 10
+                + "mins \n";
         statistics += "Time spent working: " + (workingTime) / 10 + "mins \n";
         statistics += "Time spent at lunch: " + (lunchTime) / 10 + "mins \n";
         statistics += "Time spent in meetings: " + (meetingTime) / 10
