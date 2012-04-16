@@ -24,11 +24,6 @@ public class TeamLeader extends Employee {
     private Manager manager;
 
     /**
-     * Stores the time that the team leader arrived.
-     */
-    private double arivalTime;
-
-    /**
      * The team leader team of developers.
      */
     private final HashMap<Developer, Boolean> team = new HashMap<Developer, Boolean>();
@@ -49,8 +44,17 @@ public class TeamLeader extends Employee {
             this.team.put(devs.get(i), false);
         }
         this.available = true;
+        this.workingTime = 0l;
+        this.lunchTime = 0l;
+        this.waitingTime = 0l;
+        this.meetingTime = 0l;
     }
-
+    
+    /**
+     * Sets the manager for this team leader.
+     * 
+     * @param man the one project manager for the company
+     */
     public void setManager(Manager man) {
         this.manager = man;
     }
@@ -111,26 +115,41 @@ public class TeamLeader extends Employee {
     }
 
     /**
+<<<<<<< HEAD
+     * Gets the availability of the Leader.
+     */
+    public boolean isAvailable() {
+        return available;
+    }
+
+    /**
      * Override for the run method in the Thread class.
      */
     @Override
     public void run() {
+        long tempStart;
+        long tempEnd;
         Random rand = new Random();
         try {
             sleep(rand.nextInt(300));
         } catch (InterruptedException e1) {
             System.err.println(e1.toString());
         }
-        this.arivalTime = getTime();
+        this.arrivalTime = getTime();
         System.out.println(getTimeInString() + " " + this.name
                 + " arrives at the company");
+        System.out.println(getTimeInString() + " " + this.name
+                + " knocks on manager's door");
+        tempStart = getTime();
         manager.notifyArrival(this);
-
+        tempEnd = getTime();
+        this.meetingTime += tempEnd - tempStart;
         System.out.println(getTimeInString() + " " + this.name
                 + " waits for team members to arrive");
         while (!this.hasTeamArrived()) {
             try {
                 sleep(10);
+                this.waitingTime += 10;
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -139,8 +158,11 @@ public class TeamLeader extends Employee {
         try {
             System.out.println(getTimeInString() + " " + this.name
                     + " brings team to the conference room");
+            tempStart = getTime();
             conferenceRoom.lockRoom();
             this.endMeeting();
+            tempEnd = getTime();
+            this.meetingTime += tempEnd - tempStart;
             System.out.println(getTimeInString() + " " + this.name
                     + " finishes meeting");
         } catch (InterruptedException e) {
@@ -156,17 +178,22 @@ public class TeamLeader extends Employee {
             int task = rand.nextInt(600000);
 
             // check to see if its time for the update meeting.
-            if (this.available && !hadUpdateMeeting && getTime() >= 16) {
+            if (this.available && !hadUpdateMeeting && getTime() >= 4800) {
                 // TODO meeting at 4:00
+                this.available = false;
                 System.out.println(getTimeInString() + " " + this.name
                         + " goes to update meeting");
                 try {
+                    tempStart = getTime();
                     conferenceRoom.projectStatusMeeting();
+                    tempEnd = getTime();
+                    this.meetingTime += tempEnd - tempStart;
                     hadUpdateMeeting = true;
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+                this.available = true;
             }
 
             // asking questions
@@ -174,7 +201,10 @@ public class TeamLeader extends Employee {
                 System.out.println(getTimeInString() + " " + this.name
                         + " askes " + manager.getEmployeeName()
                         + " the question");
+                tempStart = getTime();
                 manager.answerQuestion();
+                tempEnd = getTime();
+                this.waitingTime += tempEnd - tempStart;
             }
 
             // TODO randomly decide to go to lunch
@@ -185,7 +215,8 @@ public class TeamLeader extends Employee {
 
                 ateLunch = true;
                 try {
-                    sleep(30 + rand.nextInt(31));
+                    this.lunchTime = 30 + rand.nextInt(31);
+                    sleep(this.lunchTime);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -193,10 +224,11 @@ public class TeamLeader extends Employee {
                 this.available = true;
             }
 
-            if (hadUpdateMeeting && getTime() - arivalTime >= 8) {
+            if (hadUpdateMeeting && getTime() - this.arrivalTime >= 4800) {
                 // TODO leave after 8 Hours
                 try {
                     sleep(rand.nextInt(280));
+                    this.officeTime = getTime() - this.arrivalTime;
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
