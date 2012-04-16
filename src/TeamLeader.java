@@ -70,7 +70,7 @@ public class TeamLeader extends Employee {
             int askMan = gen.nextInt(10);
             if (askMan % 2 == 0) {
                 System.out.println(getTimeInString() + " " + name
-                        + " cant answer the question");
+                        + " can't answer the question");
                 System.out.println(getTimeInString() + " " + name + " asks "
                         + manager.getEmployeeName() + " the question");
                 manager.answerQuestion();
