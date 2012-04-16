@@ -23,41 +23,41 @@ public class Main {
 
         ConferenceRoom room = new ConferenceRoom();
 
-        Developer developer1 = new Developer(time, "Developer 1", room);
-        Developer developer2 = new Developer(time, "Developer 2", room);
-        Developer developer3 = new Developer(time, "Developer 3", room);
+        Developer developer1 = new Developer(time, "Developer 12", room);
+        Developer developer2 = new Developer(time, "Developer 13", room);
+        Developer developer3 = new Developer(time, "Developer 14", room);
         List<Developer> developers1 = new ArrayList<Developer>();
         developers1.add(developer1);
         developers1.add(developer2);
         developers1.add(developer3);
         TeamLeader leader1 = new TeamLeader(time, developers1, room,
-                "Leader 1");
+                "Developer 11");
         for (Developer developer : developers1) {
             developer.setLeader(leader1);
         }
 
-        Developer developer4 = new Developer(time, "Developer 4", room);
-        Developer developer5 = new Developer(time, "Developer 5", room);
-        Developer developer6 = new Developer(time, "Developer 6", room);
+        Developer developer4 = new Developer(time, "Developer 22", room);
+        Developer developer5 = new Developer(time, "Developer 23", room);
+        Developer developer6 = new Developer(time, "Developer 24", room);
         List<Developer> developers2 = new ArrayList<Developer>();
         developers2.add(developer4);
         developers2.add(developer5);
         developers2.add(developer6);
         TeamLeader leader2 = new TeamLeader(time, developers2, room,
-                "Leader 2");
+                "Developer 21");
         for (Developer developer : developers2) {
             developer.setLeader(leader2);
         }
 
-        Developer developer7 = new Developer(time, "Developer 7", room);
-        Developer developer8 = new Developer(time, "Developer 8", room);
-        Developer developer9 = new Developer(time, "Developer 9", room);
+        Developer developer7 = new Developer(time, "Developer 32", room);
+        Developer developer8 = new Developer(time, "Developer 33", room);
+        Developer developer9 = new Developer(time, "Developer 34", room);
         List<Developer> developers3 = new ArrayList<Developer>();
         developers3.add(developer7);
         developers3.add(developer8);
         developers3.add(developer9);
         TeamLeader leader3 = new TeamLeader(time, developers3, room,
-                "Leader 3");
+                "Developer 31");
         for (Developer developer : developers3) {
             developer.setLeader(leader3);
         }
@@ -85,5 +85,28 @@ public class Main {
         for (Developer developer : developers3) {
             developer.start();
         }
+
+        // Wait for the day to end
+        try {
+            Thread.sleep(5500);
+        } catch (InterruptedException e) {
+            System.err.println(e.toString());
+        }
+
+        // Print out statistics
+        for (TeamLeader leader : leaders) {
+            System.out.println();
+        }
+        for (Developer developer : developers1) {
+            System.out.println();
+        }
+        for (Developer developer : developers2) {
+            System.out.println();
+        }
+        for (Developer developer : developers3) {
+            System.out.println();
+        }
+
+        System.out.println();
     }
 }

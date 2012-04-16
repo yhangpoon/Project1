@@ -27,6 +27,10 @@ public class Manager extends Employee {
      */
     public Manager(Calendar time, List<TeamLeader> leaders,
             ConferenceRoom conferenceRoom, String name) {
+        this.lunchTime = 0;
+        this.meetingTime = 0;
+        this.workingTime = 0;
+        this.officeTime = 0;
         this.name = name;
         this.startTime = time;
         this.conferenceRoom = conferenceRoom;
@@ -98,6 +102,8 @@ public class Manager extends Employee {
     @Override
     public void run() {
 
+        long arrival = 0;
+
         // Manager Status
         boolean inMeeting = false;
 
@@ -128,7 +134,8 @@ public class Manager extends Employee {
 
         while (hasArrived()) {
             // 10am - 11am Meeting (Finish answering first)
-            if (getTime() >= 10 && getTime() < 11) {
+            if (getTime() >= 1200 && getTime() < 1800) {
+                arrival = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
                 available = false;
@@ -137,12 +144,13 @@ public class Manager extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
                 }
+                meetingTime += getTime() - arrival;
                 available = true;
                 notifyEveryone();
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
-            if (getTime() >= 12 && getTime() < 13) {
+            if (getTime() >= 2400 && getTime() < 3000) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to lunch");
                 available = false;
@@ -156,7 +164,7 @@ public class Manager extends Employee {
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
-            if (getTime() >= 14 && getTime() < 15) {
+            if (getTime() >= 3600 && getTime() < 4200) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
                 available = false;
@@ -170,7 +178,7 @@ public class Manager extends Employee {
             }
 
             // 4:15pm Meeting in Conference room
-            if (getTime() >= 16.25 && inMeeting == false) {
+            if (getTime() >= 4950 && inMeeting == false) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
                 available = false;

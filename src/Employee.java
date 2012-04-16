@@ -80,14 +80,9 @@ abstract class Employee extends Thread {
      * 
      * @return The current simulated time in a Calendar object
      */
-    protected Double getTime() {
-        Long time = Calendar.getInstance().getTimeInMillis()
+    protected Long getTime() {
+        return Calendar.getInstance().getTimeInMillis()
                 - startTime.getTimeInMillis();
-
-        Double timeInDouble = (double) time;
-        timeInDouble = timeInDouble / 600 + 8;
-
-        return timeInDouble;
     }
 
     protected String getTimeInString() {
