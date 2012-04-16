@@ -27,10 +27,10 @@ public class Manager extends Employee {
      */
     public Manager(Calendar time, List<TeamLeader> leaders,
             ConferenceRoom conferenceRoom, String name) {
-        this.lunchTime = 0;
-        this.meetingTime = 0;
-        this.workingTime = 0;
-        this.officeTime = 0;
+        this.lunchTime = 0l;
+        this.meetingTime = 0l;
+        this.workingTime = 0l;
+        this.officeTime = 0l;
         this.name = name;
         this.startTime = time;
         this.conferenceRoom = conferenceRoom;

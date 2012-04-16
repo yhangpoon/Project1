@@ -95,18 +95,18 @@ public class Main {
 
         // Print out statistics
         for (TeamLeader leader : leaders) {
-            System.out.println();
+            System.out.println(leader.getStatistics());
         }
         for (Developer developer : developers1) {
-            System.out.println();
+            System.out.println(developer.getStatistics());
         }
         for (Developer developer : developers2) {
-            System.out.println();
+            System.out.println(developer.getStatistics());
         }
         for (Developer developer : developers3) {
-            System.out.println();
+            System.out.println(developer.getStatistics());
         }
 
-        System.out.println();
+        System.out.println(manager.getStatistics());
     }
 }
