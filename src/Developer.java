@@ -62,8 +62,9 @@ public class Developer extends Employee {
             arrivalTime = getTime();
             System.out.println(getTimeInString() + " " + name
                     + " arrives at the company");
-
+            long beginningTime = getTime();
             leader.notifyArrival(this);
+            meetingTime += getTime() - beginningTime;
 
         } catch (InterruptedException e) {
         }
@@ -84,9 +85,9 @@ public class Developer extends Employee {
                 if (goToLunch == 1) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
-                    lunchTime = (long) (ran.nextInt(300) + 300);
+                    this.lunchTime = ran.nextInt(300) + 300;
                     try {
-                        sleep(lunchTime);
+                        sleep(this.lunchTime);
                     } catch (InterruptedException e) {
                     }
                     hasGoneToLunch = true;
@@ -97,12 +98,14 @@ public class Developer extends Employee {
             if (getTime() >= 4800 && !hasGoneToMeeting) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
+                Long beginTime = getTime();
                 try {
-                    Long beginTime = System.currentTimeMillis();
+
                     conferenceRoom.projectStatusMeeting();
-                    meetingTime += (System.currentTimeMillis() - beginTime);
+
                 } catch (InterruptedException e) {
                 }
+                this.meetingTime += (getTime() - beginTime);
                 hasGoneToMeeting = true;
             }
         }
@@ -111,7 +114,7 @@ public class Developer extends Employee {
         } catch (InterruptedException e) {
         }
 
-        officeTime = getTime() - arrivalTime;
+        this.officeTime = getTime() - arrivalTime;
         System.out.println(getTimeInString() + " " + name + " leaves work");
     }
 }
