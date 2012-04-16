@@ -19,6 +19,7 @@ public class Main {
      */
     public static void main(String[] args) {
 
+        // Create the scenario
         Calendar time = Calendar.getInstance();
 
         ConferenceRoom room = new ConferenceRoom();
@@ -71,6 +72,7 @@ public class Main {
             leader.setManager(manager);
         }
 
+        // Start Threads
         manager.start();
 
         for (TeamLeader leader : leaders) {
@@ -94,9 +96,18 @@ public class Main {
         }
 
         // Print out statistics
+        System.out.println("\n");
+        System.out.println("============================================");
+        System.out.println("Statistics: \n");
+        System.out.println("\n");
+        System.out.println("--------------------------------------------");
+        System.out.println("Team Leaders: \n");
         for (TeamLeader leader : leaders) {
             System.out.println(leader.getStatistics());
         }
+        System.out.println("\n");
+        System.out.println("--------------------------------------------");
+        System.out.println("Developers: \n");
         for (Developer developer : developers1) {
             System.out.println(developer.getStatistics());
         }
@@ -107,6 +118,9 @@ public class Main {
             System.out.println(developer.getStatistics());
         }
 
+        System.out.println("\n");
+        System.out.println("--------------------------------------------");
+        System.out.println("Manager: \n");
         System.out.println(manager.getStatistics());
     }
 }

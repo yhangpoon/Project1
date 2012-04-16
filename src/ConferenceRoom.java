@@ -21,6 +21,11 @@ public class ConferenceRoom {
         this.available = new AtomicInteger(1);
     }
 
+    /**
+     * Employees enter conference room and wait for the project status meeting.
+     * 
+     * @throws InterruptedException
+     */
     public synchronized void projectStatusMeeting()
             throws InterruptedException {
         this.wait();

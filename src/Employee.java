@@ -30,17 +30,11 @@ abstract class Employee extends Thread {
      */
     protected String name;
 
-    protected long lunchTime;
-
-    protected long meetingTime;
-
-    protected long waitingTime;
-
-    protected long workingTime;
-
-    protected long officeTime;
-
-    protected long arrivalTime;
+    /**
+     * For Statistic Purpose.
+     */
+    protected long lunchTime, meetingTime, waitingTime, workingTime,
+            officeTime, arrivalTime;
 
     /**
      * Return the arrival status of the programmer.
@@ -78,13 +72,18 @@ abstract class Employee extends Thread {
      * Return the current simulated time based on the time elapsed since the
      * beginning time.
      * 
-     * @return The current simulated time in a Calendar object
+     * @return The current simulated time in Millisecond
      */
     protected Long getTime() {
         return Calendar.getInstance().getTimeInMillis()
                 - startTime.getTimeInMillis();
     }
 
+    /**
+     * Return the current simulated time in hour in String.
+     * 
+     * @return The current simulated time in String
+     */
     protected String getTimeInString() {
         String result = null;
 
@@ -106,22 +105,26 @@ abstract class Employee extends Thread {
         return result;
     }
 
+    /**
+     * Return a String of all the statistics about this employee.
+     * 
+     * @return statistics of the employee
+     */
     public String getStatistics() {
-        String statistics = "";
-        workingTime = (officeTime - lunchTime - meetingTime - waitingTime);
-        statistics += "Employee: " + name + "\n";
-        statistics += "Total Time in Office: " + (officeTime) / 10
-                + " mins \n";
-        statistics += "Time spent working: " + (workingTime) / 10
-                + " mins \n";
-        statistics += "Time spent at lunch: " + (lunchTime) / 10 + " mins \n";
-        statistics += "Time spent in meetings: " + (meetingTime) / 10
-                + " mins \n";
-        statistics += "Time spent waiting: " + (waitingTime) / 10
-                + " mins \n";
-        return statistics;
+        String result = "";
+        workingTime = officeTime - lunchTime - meetingTime - waitingTime;
+        result += "Employee: " + name + "\n";
+        result += "Total Time in Office: " + officeTime / 10 + " mins \n";
+        result += "Time spent working: " + workingTime / 10 + " mins \n";
+        result += "Time spent at lunch: " + lunchTime / 10 + " mins \n";
+        result += "Time spent in meetings: " + meetingTime / 10 + " mins \n";
+        result += "Time spent waiting: " + waitingTime / 10 + " mins \n";
+        return result;
     }
 
+    /**
+     * All employees must override this method.
+     */
     @Override
     public abstract void run();
 

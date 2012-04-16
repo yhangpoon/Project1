@@ -40,7 +40,7 @@ public class Manager extends Employee {
     }
 
     /**
-     * Notify Manager the leader's arrival.
+     * Notify Manager the leader's eventStartTime.
      */
     public synchronized void notifyArrival(TeamLeader leader) {
         leaders.put(leader, true);
@@ -102,10 +102,8 @@ public class Manager extends Employee {
     @Override
     public void run() {
 
-        long arrival = 0;
-
-        // Manager Status
-        boolean inMeeting = false;
+        // Each event's starting time
+        long eventStartTime = 0;
 
         if (startTime != null) {
             arrivalTime = getTime();
@@ -123,81 +121,98 @@ public class Manager extends Employee {
 
         // Daily 15min meeting with team leads Notify all when back
         available = false;
+        eventStartTime = getTime();
         System.out.println(getTimeInString() + " " + name
                 + " goes to the daily 15 minutes meeting");
         try {
-            arrival = getTime();
             Thread.sleep(150);
-            meetingTime += getTime() - arrival;
         } catch (InterruptedException e) {
             System.err.print(e.toString());
+        } finally {
+            available = true;
+            notifyEveryone();
         }
-        available = true;
-        notifyEveryone();
+        meetingTime += getTime() - eventStartTime;
+
+        for (TeamLeader leader : leaders.keySet()) {
+            leaders.put(leader, false);
+        }
 
         while (hasArrived()) {
             // 10am - 11am Meeting (Finish answering first)
             if (getTime() >= 1200 && getTime() < 1800) {
+                available = false;
+                eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
-                available = false;
                 try {
-                    arrival = getTime();
                     Thread.sleep(600);
-                    meetingTime += getTime() - arrival;
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
+                } finally {
+                    available = true;
+                    notifyEveryone();
                 }
-                available = true;
-                notifyEveryone();
+                meetingTime += getTime() - eventStartTime;
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
             if (getTime() >= 2400 && getTime() < 3000) {
-                arrival = getTime();
+                available = false;
+                eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to lunch");
-                available = false;
                 try {
                     Thread.sleep(600);
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
+                } finally {
+                    available = true;
+                    notifyEveryone();
                 }
-                lunchTime += getTime() - arrival;
-                available = true;
-                notifyEveryone();
+                lunchTime += getTime() - eventStartTime;
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
             if (getTime() >= 3600 && getTime() < 4200) {
-                arrival = getTime();
+                available = false;
+                eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
-                available = false;
                 try {
                     Thread.sleep(600);
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
+                } finally {
+                    available = true;
+                    notifyEveryone();
                 }
-                meetingTime += getTime() - arrival;
-                available = true;
-                notifyEveryone();
+                meetingTime += getTime() - eventStartTime;
             }
 
             // 4:15pm Meeting in Conference room
-            if (getTime() >= 4950 && inMeeting == false) {
-                arrival = getTime();
-                System.out.println(getTimeInString() + " " + name
-                        + " goes to the project status meeting");
+            if (getTime() >= 4950 && getTime() < 5100) {
+
+                // Wait for all leaders to arrive the conference room
+                while (!hasLeadersArrived()) {
+                    working();
+                }
+                notifyEveryone();
                 available = false;
-                inMeeting = true;
+                eventStartTime = getTime();
+                System.out.println(getTimeInString() + " " + name
+                        + " starts project status meeting");
                 try {
+                    sleep(10);
                     conferenceRoom.lockRoom();
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
+                } finally {
+                    available = true;
                 }
-                meetingTime += getTime() - arrival;
-                available = true;
+                meetingTime += getTime() - eventStartTime;
+                System.out.println(getTimeInString() + " " + name
+                        + " ends project status meeting");
             }
 
             // 5pm Leave
@@ -207,6 +222,9 @@ public class Manager extends Employee {
                 this.officeTime = getTime() - arrivalTime;
                 left();
             }
-        }
-    }
+
+        } // End While Loop
+
+    } // End Run
+
 }
