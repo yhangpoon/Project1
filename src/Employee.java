@@ -30,17 +30,17 @@ abstract class Employee extends Thread {
      */
     protected String name;
 
-    protected Long lunchTime;
+    protected long lunchTime;
 
-    protected Long meetingTime;
+    protected long meetingTime;
 
-    protected Long waitingTime;
+    protected long waitingTime;
 
-    protected Long workingTime;
+    protected long workingTime;
 
-    protected Long officeTime;
+    protected long officeTime;
 
-    protected Long arrivalTime;
+    protected long arrivalTime;
 
     /**
      * Return the arrival status of the programmer.
@@ -109,11 +109,10 @@ abstract class Employee extends Thread {
     public String getStatistics() {
         String statistics = "";
         workingTime = officeTime - lunchTime - meetingTime - waitingTime;
-        statistics += "Time spent working: " + workingTime.toString() + "\n";
-        statistics += "Time spent at lunch: " + lunchTime.toString() + "\n";
-        statistics += "Time spent in meetings: " + meetingTime.toString()
-                + "\n";
-        statistics += "Time spent waiting: " + waitingTime.toString() + "\n";
+        statistics += "Time spent working: " + workingTime + "\n";
+        statistics += "Time spent at lunch: " + lunchTime + "\n";
+        statistics += "Time spent in meetings: " + meetingTime + "\n";
+        statistics += "Time spent waiting: " + waitingTime + "\n";
         return statistics;
     }
 
