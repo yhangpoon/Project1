@@ -22,9 +22,12 @@ public class Developer extends Employee {
      *            - Assigned Team Leader
      */
     public Developer(Calendar time, String name, ConferenceRoom room) {
-        this.startTime = time;
+        this.lunchTime = 0l;
+        this.waitingTime = 0l;
+        this.meetingTime = 0l;
         this.arrived = false;
         this.name = name;
+        this.startTime = time;
         this.conferenceRoom = room;
     }
 
@@ -54,20 +57,24 @@ public class Developer extends Employee {
         Boolean hasGoneToMeeting = false;
         try {
             sleep(ran.nextInt(300));
+            arrivalTime = getTime();
             System.out.println(getTimeInString() + " " + name
                     + " arrives at the company");
+
             leader.notifyArrival(this);
 
         } catch (InterruptedException e) {
         }
-        while (System.currentTimeMillis() - startTime.getTimeInMillis() < 4800
-                || !hasGoneToMeeting) {
+        while (getTime() - arrivalTime < 4800 || !hasGoneToMeeting) {
             // Ask team leader a question.
             int askQuestion = ran.nextInt(400000);
             if (askQuestion == 1) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + leader.getEmployeeName() + " a question");
+                long beforeQuestion = System.currentTimeMillis();
                 leader.answerQuestion();
+                this.waitingTime += (System.currentTimeMillis() - beforeQuestion);
+
             }
             // Lunch
             if (!hasGoneToLunch) {
@@ -75,7 +82,7 @@ public class Developer extends Employee {
                 if (goToLunch == 1) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
-                    int lunchTime = ran.nextInt(300) + 300;
+                    lunchTime = (long) (ran.nextInt(300) + 300);
                     try {
                         sleep(lunchTime);
                     } catch (InterruptedException e) {
@@ -89,7 +96,9 @@ public class Developer extends Employee {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
                 try {
+                    Long beginTime = System.currentTimeMillis();
                     conferenceRoom.projectStatusMeeting();
+                    meetingTime += (System.currentTimeMillis() - beginTime);
                 } catch (InterruptedException e) {
                 }
                 hasGoneToMeeting = true;
@@ -99,6 +108,7 @@ public class Developer extends Employee {
             sleep(ran.nextInt(280));
         } catch (InterruptedException e) {
         }
+        officeTime = System.currentTimeMillis() - arrivalTime;
         System.out.println(getTimeInString() + " " + name + " leaves work");
     }
 }
