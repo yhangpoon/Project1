@@ -111,12 +111,14 @@ abstract class Employee extends Thread {
         workingTime = (officeTime - lunchTime - meetingTime - waitingTime);
         statistics += "Employee: " + name + "\n";
         statistics += "Total Time in Office: " + (officeTime) / 10
-                + "mins \n";
-        statistics += "Time spent working: " + (workingTime) / 10 + "mins \n";
-        statistics += "Time spent at lunch: " + (lunchTime) / 10 + "mins \n";
+                + " mins \n";
+        statistics += "Time spent working: " + (workingTime) / 10
+                + " mins \n";
+        statistics += "Time spent at lunch: " + (lunchTime) / 10 + " mins \n";
         statistics += "Time spent in meetings: " + (meetingTime) / 10
-                + "mins \n";
-        statistics += "Time spent waiting: " + (waitingTime) / 10 + "mins \n";
+                + " mins \n";
+        statistics += "Time spent waiting: " + (waitingTime) / 10
+                + " mins \n";
         return statistics;
     }
 
