@@ -48,7 +48,7 @@ public class Manager extends Employee {
         try {
             this.wait();
         } catch (InterruptedException e) {
-            System.err.println(e.toString());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public class Manager extends Employee {
                         + " is busy at the moment");
                 this.wait();
             } catch (InterruptedException e) {
-                System.err.println(e.toString());
+                System.err.println(e.getMessage());
             }
         }
         System.out.println(getTimeInString() + " " + name
@@ -92,7 +92,7 @@ public class Manager extends Employee {
         try {
             this.wait(10);
         } catch (InterruptedException e) {
-            System.err.println(e.toString());
+            System.err.println(e.getMessage());
         }
     }
 
@@ -127,7 +127,7 @@ public class Manager extends Employee {
         try {
             Thread.sleep(150);
         } catch (InterruptedException e) {
-            System.err.print(e.toString());
+            System.err.print(e.getMessage());
         } finally {
             available = true;
             notifyEveryone();
@@ -150,7 +150,7 @@ public class Manager extends Employee {
                 try {
                     Thread.sleep(600);
                 } catch (InterruptedException e) {
-                    System.err.print(e.toString());
+                    System.err.print(e.getMessage());
                 } finally {
                     available = true;
                     notifyEveryone();
@@ -167,7 +167,7 @@ public class Manager extends Employee {
                 try {
                     Thread.sleep(600);
                 } catch (InterruptedException e) {
-                    System.err.print(e.toString());
+                    System.err.print(e.getMessage());
                 } finally {
                     available = true;
                     notifyEveryone();
@@ -184,7 +184,7 @@ public class Manager extends Employee {
                 try {
                     Thread.sleep(600);
                 } catch (InterruptedException e) {
-                    System.err.print(e.toString());
+                    System.err.print(e.getMessage());
                 } finally {
                     available = true;
                     notifyEveryone();
@@ -208,7 +208,7 @@ public class Manager extends Employee {
                     sleep(10);
                     conferenceRoom.lockRoom();
                 } catch (InterruptedException e) {
-                    System.err.print(e.toString());
+                    System.err.print(e.getMessage());
                 } finally {
                     available = true;
                 }
