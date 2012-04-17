@@ -18,6 +18,8 @@ public class TeamLeader extends Employee {
      */
     private boolean available;
 
+    private final long meetingDuration = 150;
+
     /**
      * The Team Leader's project manager.
      */
@@ -73,7 +75,9 @@ public class TeamLeader extends Employee {
                         + " can't answer the question");
                 System.out.println(getTimeInString() + " " + name + " asks "
                         + manager.getEmployeeName() + " the question");
+                long startTime = getTime();
                 manager.answerQuestion();
+                waitingTime += getTime() - startTime;
                 available = true;
             } else {
                 System.out.println(getTimeInString() + ":" + name
@@ -102,6 +106,7 @@ public class TeamLeader extends Employee {
      * 
      * @param dev
      *            the developer that has arrived
+     * 
      * @throws InterruptedException
      */
     public synchronized void notifyArrival(Developer dev)
@@ -134,8 +139,8 @@ public class TeamLeader extends Employee {
         // Arrive Work
         try {
             sleep(rand.nextInt(300));
-        } catch (InterruptedException e1) {
-            System.err.println(e1.toString());
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
         }
         arrivalTime = getTime();
         arrived();
@@ -147,7 +152,8 @@ public class TeamLeader extends Employee {
                 + " knocks on manager's door");
         eventStartTime = getTime();
         manager.notifyArrival(this);
-        meetingTime += getTime() - eventStartTime;
+        waitingTime += (getTime() - eventStartTime) - meetingDuration;
+        meetingTime += meetingDuration;
 
         // Daily 15 minutes morning meeting with team
         System.out.println(getTimeInString() + " " + name
@@ -157,7 +163,7 @@ public class TeamLeader extends Employee {
                 sleep(10);
                 waitingTime += 10;
             } catch (InterruptedException e) {
-                System.err.print(e.toString());
+                System.err.print(e.getMessage());
             }
         }
 
@@ -168,11 +174,12 @@ public class TeamLeader extends Employee {
         try {
             conferenceRoom.lockRoom();
         } catch (InterruptedException e) {
-            System.err.print(e.toString());
+            System.err.print(e.getMessage());
         } finally {
             notifyEveryone();
         }
-        meetingTime += getTime() - eventStartTime;
+        waitingTime += (getTime() - eventStartTime) - meetingDuration;
+        meetingTime += meetingDuration;
         System.out.println(getTimeInString() + " " + name
                 + " finishes meeting");
 
@@ -183,13 +190,28 @@ public class TeamLeader extends Employee {
         while (hasArrived()) {
             int task = rand.nextInt(550000);
 
+            // go to lunch before its too late
+            if (!ateLunch && getTime() >= 4200 && available) {
+                available = false;
+                System.out.println(getTimeInString() + " " + name
+                        + " goes to lunch");
+
+                ateLunch = true;
+                try {
+                    this.lunchTime = 300 + rand.nextInt(310);
+                    sleep(this.lunchTime);
+                } catch (InterruptedException e) {
+                    System.err.print(e.getMessage());
+                }
+                available = true;
+            }
+
             // Ask Questions
             if (available && task < 1) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + manager.getEmployeeName() + " the question");
                 eventStartTime = getTime();
                 manager.answerQuestion();
-
                 waitingTime += getTime() - eventStartTime;
             }
 
@@ -198,13 +220,12 @@ public class TeamLeader extends Employee {
                 available = false;
                 System.out.println(getTimeInString() + " " + name
                         + " goes to lunch");
-
                 ateLunch = true;
                 try {
-                    lunchTime = 300 + rand.nextInt(300);
-                    sleep(lunchTime);
+                    this.lunchTime = 300 + rand.nextInt(310);
+                    sleep(this.lunchTime);
                 } catch (InterruptedException e) {
-                    System.err.print(e.toString());
+                    System.err.print(e.getMessage());
                 }
                 available = true;
             }
@@ -217,7 +238,7 @@ public class TeamLeader extends Employee {
                         sleep(10);
                         waitingTime += 10;
                     } catch (InterruptedException e) {
-                        System.err.print(e.toString());
+                        System.err.print(e.getMessage());
                     }
                 }
                 notifyEveryone();
@@ -231,7 +252,8 @@ public class TeamLeader extends Employee {
                     System.err.print(e.toString());
                 }
                 available = true;
-                meetingTime += getTime() - eventStartTime;
+                waitingTime += (getTime() - eventStartTime) - meetingDuration;
+                meetingTime += meetingDuration;
             }
 
             // Leave work after 8 hours of work
@@ -240,7 +262,7 @@ public class TeamLeader extends Employee {
                     try {
                         sleep(rand.nextInt((int) (5400 - getTime())));
                     } catch (InterruptedException e) {
-                        System.err.print(e.toString());
+                        System.err.print(e.getMessage());
                     }
                 }
                 officeTime = getTime() - arrivalTime;
