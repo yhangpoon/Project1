@@ -85,7 +85,7 @@ public class TeamLeader extends Employee {
                 available = true;
             }
         } else {
-            System.out.println(getTimeInString() + ":" + name
+            System.out.println(getTimeInString() + " " + name
                     + " is not available");
             manager.answerQuestion();
         }
@@ -188,7 +188,7 @@ public class TeamLeader extends Employee {
         }
         boolean hadStatusMeeting = false;
         while (hasArrived()) {
-            int task = rand.nextInt(550000);
+            int task = rand.nextInt(400000);
 
             // Randomly Goes to Lunch
             if (!ateLunch) {
