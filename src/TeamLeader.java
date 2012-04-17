@@ -18,6 +18,9 @@ public class TeamLeader extends Employee {
      */
     private boolean available;
 
+    /**
+     * The length of the team leader meetings.
+     */
     private final long meetingDuration = 150;
 
     /**
@@ -136,7 +139,7 @@ public class TeamLeader extends Employee {
         // Whether the employee has had lunch or not
         boolean ateLunch = false;
 
-        // Arrive Work
+        // Random arrive at Work
         try {
             sleep(rand.nextInt(300));
         } catch (InterruptedException e) {
