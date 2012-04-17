@@ -69,7 +69,7 @@ public class Developer extends Employee {
         // Whether the developer has had lunch or not
         Boolean ateLunch = false;
 
-        //
+        // Whether the developer has been to the status meeting or not.
         Boolean hadStatusMeeting = false;
 
         // Arrive work
@@ -94,12 +94,13 @@ public class Developer extends Employee {
         meetingTime += meetingDuration;
 
         while (hasArrived()) {
+            // A random number that allows tasks to occur.
+            int task = rand.nextInt(400000);
 
             // Randomly Goes to Lunch
             if (!ateLunch) {
-                int goToLunch = rand.nextInt(300000);
                 // The developer needs to go to lunch by 2PM=3600ms
-                if (goToLunch == 1 || getTime() >= 3600) {
+                if (task == 1 || getTime() >= 3600) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
                     lunchTime = rand.nextInt(300) + 300;
@@ -115,8 +116,7 @@ public class Developer extends Employee {
             }
 
             // Ask team leader a question.
-            int askQuestion = rand.nextInt(300000);
-            if (askQuestion == 1) {
+            if (task == 2) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + leader.getEmployeeName() + " a question");
                 eventStartTime = getTime();
