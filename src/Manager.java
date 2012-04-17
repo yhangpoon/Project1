@@ -133,7 +133,7 @@ public class Manager extends Employee {
             notifyEveryone();
         }
         System.out.println(getTimeInString() + " " + name
-                + " is back from the daily 15 minutes meeting");
+                + " returns from the daily 15 minutes meeting");
         meetingTime += getTime() - eventStartTime;
 
         for (TeamLeader leader : leaders.keySet()) {
@@ -157,7 +157,7 @@ public class Manager extends Employee {
                 }
                 meetingTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
-                        + " is back from the executive meeting");
+                        + " returns from the executive meeting");
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
@@ -176,7 +176,7 @@ public class Manager extends Employee {
                 }
                 lunchTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
-                        + " is back from lunch");
+                        + " returns from lunch");
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
@@ -195,7 +195,7 @@ public class Manager extends Employee {
                 }
                 meetingTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
-                        + " is back from the executive meeting");
+                        + " returns from the executive meeting");
             }
 
             // 4:15pm Meeting in Conference room
