@@ -181,29 +181,33 @@ public class TeamLeader extends Employee {
         waitingTime += (getTime() - eventStartTime) - meetingDuration;
         meetingTime += meetingDuration;
         System.out.println(getTimeInString() + " " + name
-                + " finishes meeting");
+                + " returns from the standup meeting");
 
         for (Developer developer : team.keySet()) {
             team.put(developer, false);
         }
-
+        boolean hadStatusMeeting = false;
         while (hasArrived()) {
             int task = rand.nextInt(550000);
 
-            // go to lunch before its too late
-            if (!ateLunch && getTime() >= 4200 && available) {
-                available = false;
-                System.out.println(getTimeInString() + " " + name
-                        + " goes to lunch");
-
-                ateLunch = true;
-                try {
-                    this.lunchTime = 300 + rand.nextInt(310);
-                    sleep(this.lunchTime);
-                } catch (InterruptedException e) {
-                    System.err.print(e.getMessage());
+            // Randomly Goes to Lunch
+            if (!ateLunch) {
+                if ((available && task > 3 && task < 10) || getTime() >= 4200) {
+                    available = false;
+                    System.out.println(getTimeInString() + " " + name
+                            + " goes to lunch");
+                    ateLunch = true;
+                    try {
+                        this.lunchTime = 300 + rand.nextInt(310);
+                        sleep(this.lunchTime);
+                    } catch (InterruptedException e) {
+                        System.err.print(e.getMessage());
+                    }
+                    available = true;
+                    ateLunch = true;
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from lunch");
                 }
-                available = true;
             }
 
             // Ask Questions
@@ -215,23 +219,8 @@ public class TeamLeader extends Employee {
                 waitingTime += getTime() - eventStartTime;
             }
 
-            // Randomly Goes to Lunch
-            if (!ateLunch && available && task > 3 && task < 10) {
-                available = false;
-                System.out.println(getTimeInString() + " " + name
-                        + " goes to lunch");
-                ateLunch = true;
-                try {
-                    this.lunchTime = 300 + rand.nextInt(310);
-                    sleep(this.lunchTime);
-                } catch (InterruptedException e) {
-                    System.err.print(e.getMessage());
-                }
-                available = true;
-            }
-
             // Project Status meeting
-            if (available && getTime() >= 4800 && getTime() < 5100) {
+            if (!hadStatusMeeting && available && getTime() >= 4800) {
                 available = false;
                 while (!hasTeamArrived()) {
                     try {
@@ -254,10 +243,13 @@ public class TeamLeader extends Employee {
                 available = true;
                 waitingTime += (getTime() - eventStartTime) - meetingDuration;
                 meetingTime += meetingDuration;
+                hadStatusMeeting = true;
+                System.out.println(getTimeInString() + " " + name
+                        + " returns from the status meeting");
             }
 
             // Leave work after 8 hours of work
-            if (getTime() - arrivalTime >= 4800) {
+            if (hadStatusMeeting && getTime() - arrivalTime >= 4800) {
                 if (getTime() < 5400) {
                     try {
                         sleep(rand.nextInt((int) (5400 - getTime())));
