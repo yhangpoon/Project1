@@ -69,6 +69,9 @@ public class Developer extends Employee {
         // Whether the developer has had lunch or not
         Boolean ateLunch = false;
 
+        //
+        Boolean hadStatusMeeting = false;
+
         // Arrive work
         try {
             sleep(rand.nextInt(300));
@@ -92,17 +95,6 @@ public class Developer extends Employee {
 
         while (hasArrived()) {
 
-            // Ask team leader a question.
-            int askQuestion = rand.nextInt(300000);
-            if (askQuestion == 1) {
-                System.out.println(getTimeInString() + " " + name + " askes "
-                        + leader.getEmployeeName() + " a question");
-                eventStartTime = getTime();
-                leader.answerQuestion();
-                waitingTime += getTime() - eventStartTime;
-
-            }
-
             // Randomly Goes to Lunch
             if (!ateLunch) {
                 int goToLunch = rand.nextInt(300000);
@@ -116,12 +108,24 @@ public class Developer extends Employee {
                     } catch (InterruptedException e) {
                         System.err.println(e.getMessage());
                     }
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from lunch");
                     ateLunch = true;
                 }
             }
 
+            // Ask team leader a question.
+            int askQuestion = rand.nextInt(300000);
+            if (askQuestion == 1) {
+                System.out.println(getTimeInString() + " " + name + " askes "
+                        + leader.getEmployeeName() + " a question");
+                eventStartTime = getTime();
+                leader.answerQuestion();
+                waitingTime += getTime() - eventStartTime;
+            }
+
             // Project Status meeting
-            if (getTime() >= 4800 && getTime() < 5100) {
+            if (getTime() >= 4800 && !hadStatusMeeting) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
                 eventStartTime = getTime();
@@ -131,12 +135,15 @@ public class Developer extends Employee {
                 } catch (InterruptedException e) {
                     System.err.println(e.getMessage());
                 }
+                hadStatusMeeting = true;
                 waitingTime += getTime() - eventStartTime - meetingDuration;
                 meetingTime += meetingDuration;
+                System.out.println(getTimeInString() + " " + name
+                        + " returns from the status meeting.");
             }
 
             // Leave work after 8 hours of work
-            if (getTime() - arrivalTime >= 4800) {
+            if (hadStatusMeeting && getTime() - arrivalTime >= 4800) {
                 if (getTime() < 5400) {
                     try {
                         sleep(rand.nextInt((int) (5400 - getTime())));
