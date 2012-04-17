@@ -133,7 +133,7 @@ public class Manager extends Employee {
             notifyEveryone();
         }
         System.out.println(getTimeInString() + " " + name
-                + " finishes the daily 15 minutes meeting");
+                + " is back from the daily 15 minutes meeting");
         meetingTime += getTime() - eventStartTime;
 
         for (TeamLeader leader : leaders.keySet()) {
@@ -217,6 +217,7 @@ public class Manager extends Employee {
                     System.err.print(e.getMessage());
                 } finally {
                     available = true;
+                    notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
@@ -234,5 +235,4 @@ public class Manager extends Employee {
         } // End While Loop
 
     } // End Run
-
 }
