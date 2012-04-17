@@ -98,8 +98,8 @@ public class Developer extends Employee {
             // Randomly Goes to Lunch
             if (!ateLunch) {
                 int goToLunch = rand.nextInt(300000);
-                // The developer needs to go to lunch by 3PM=4200ms
-                if (goToLunch == 1 || getTime() >= 4200) {
+                // The developer needs to go to lunch by 2PM=3600ms
+                if (goToLunch == 1 || getTime() >= 3600) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
                     lunchTime = rand.nextInt(300) + 300;
