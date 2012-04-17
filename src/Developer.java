@@ -16,6 +16,11 @@ public class Developer extends Employee {
     private TeamLeader leader;
 
     /**
+     * The length of the developers meetings.
+     */
+    private final long meetingDuration;
+
+    /**
      * Default Constructor.
      * 
      * @param leader
@@ -31,6 +36,7 @@ public class Developer extends Employee {
         this.name = name;
         this.startTime = time;
         this.conferenceRoom = room;
+        this.meetingDuration = 150l;
     }
 
     /**
@@ -67,7 +73,7 @@ public class Developer extends Employee {
         try {
             sleep(rand.nextInt(300));
         } catch (InterruptedException e) {
-            System.err.println(e.toString());
+            System.err.println(e.getMessage());
         }
         arrivalTime = getTime();
         arrived();
@@ -79,9 +85,10 @@ public class Developer extends Employee {
         try {
             leader.notifyArrival(this);
         } catch (InterruptedException e) {
-            System.err.println(e.toString());
+            System.err.println(e.getMessage());
         }
-        meetingTime += getTime() - eventStartTime;
+        waitingTime += getTime() - eventStartTime - meetingDuration;
+        meetingTime += meetingDuration;
 
         while (hasArrived()) {
 
@@ -107,7 +114,7 @@ public class Developer extends Employee {
                     try {
                         sleep(lunchTime);
                     } catch (InterruptedException e) {
-                        System.err.println(e.toString());
+                        System.err.println(e.getMessage());
                     }
                     ateLunch = true;
                 }
@@ -122,9 +129,10 @@ public class Developer extends Employee {
                     leader.notifyArrival(this);
                     conferenceRoom.projectStatusMeeting();
                 } catch (InterruptedException e) {
-                    System.err.println(e.toString());
+                    System.err.println(e.getMessage());
                 }
-                meetingTime += getTime() - eventStartTime;
+                waitingTime += getTime() - eventStartTime - meetingDuration;
+                meetingTime += meetingDuration;
             }
 
             // Leave work after 8 hours of work
@@ -133,7 +141,7 @@ public class Developer extends Employee {
                     try {
                         sleep(rand.nextInt((int) (5400 - getTime())));
                     } catch (InterruptedException e) {
-                        System.err.print(e.toString());
+                        System.err.print(e.getMessage());
                     }
                 }
                 officeTime = getTime() - arrivalTime;
