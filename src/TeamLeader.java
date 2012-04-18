@@ -157,6 +157,13 @@ public class TeamLeader extends Employee {
         manager.notifyArrival(this);
         waitingTime += (getTime() - eventStartTime) - meetingDuration;
         meetingTime += meetingDuration;
+        try {
+            sleep(1); // to fix the print out order
+        } catch (InterruptedException e1) {
+            e1.getMessage();
+        }
+        System.out.println(getTimeInString() + " " + name
+                + " returns from standup meeting with the manager");
 
         // Daily 15 minutes morning meeting with team
         System.out.println(getTimeInString() + " " + name
@@ -184,7 +191,7 @@ public class TeamLeader extends Employee {
         waitingTime += (getTime() - eventStartTime) - meetingDuration;
         meetingTime += meetingDuration;
         System.out.println(getTimeInString() + " " + name
-                + " returns from the standup meeting");
+                + " ends the standup meeting");
 
         for (Developer developer : team.keySet()) {
             team.put(developer, false);
@@ -240,12 +247,14 @@ public class TeamLeader extends Employee {
                     eventStartTime = getTime();
                     manager.notifyArrival(this);
                     conferenceRoom.projectStatusMeeting();
+                    sleep(1); // to fix the print out order
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
                 }
                 waitingTime += (getTime() - eventStartTime) - meetingDuration;
                 meetingTime += meetingDuration;
                 hadStatusMeeting = true;
+
                 System.out.println(getTimeInString() + " " + name
                         + " returns from the status meeting");
                 available.set(true);
