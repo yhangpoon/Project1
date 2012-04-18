@@ -154,12 +154,13 @@ public class Manager extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
                 } finally {
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from the executive meeting");
                     available.set(true);
                     notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
-                System.out.println(getTimeInString() + " " + name
-                        + " returns from the executive meeting");
+
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
@@ -172,12 +173,14 @@ public class Manager extends Employee {
                     Thread.sleep(3000 - getTime());
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
+                } finally {
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from lunch");
+                    available.set(true);
+                    notifyEveryone();
                 }
                 lunchTime += getTime() - eventStartTime;
-                System.out.println(getTimeInString() + " " + name
-                        + " returns from lunch");
-                available.set(true);
-                notifyEveryone();
+
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
@@ -190,12 +193,14 @@ public class Manager extends Employee {
                     Thread.sleep(4200 - getTime());
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
+                } finally {
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from the executive meeting");
+                    available.set(true);
+                    notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
-                System.out.println(getTimeInString() + " " + name
-                        + " returns from the executive meeting");
-                available.set(true);
-                notifyEveryone();
+
             }
 
             // 4:15pm Meeting in Conference room

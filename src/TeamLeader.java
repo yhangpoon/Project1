@@ -211,11 +211,13 @@ public class TeamLeader extends Employee {
                         sleep(this.lunchTime);
                     } catch (InterruptedException e) {
                         System.err.print(e.getMessage());
+                    } finally {
+                        System.out.println(getTimeInString() + " " + name
+                                + " returns from lunch");
+                        available.set(true);
+                        ateLunch = true;
                     }
-                    ateLunch = true;
-                    System.out.println(getTimeInString() + " " + name
-                            + " returns from lunch");
-                    available.set(true);
+
                 }
             }
 
@@ -238,11 +240,13 @@ public class TeamLeader extends Employee {
                         waitingTime += 10;
                     } catch (InterruptedException e) {
                         System.err.print(e.getMessage());
+                    } finally {
+                        System.out.println(getTimeInString() + " " + name
+                                + " goes to the project status meeting");
+                        notifyEveryone();
                     }
                 }
-                notifyEveryone();
-                System.out.println(getTimeInString() + " " + name
-                        + " goes to the project status meeting");
+
                 try {
                     eventStartTime = getTime();
                     manager.notifyArrival(this);
@@ -250,14 +254,15 @@ public class TeamLeader extends Employee {
                     sleep(1); // to fix the print out order
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
+                } finally {
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from the status meeting");
+                    available.set(true);
                 }
                 waitingTime += (getTime() - eventStartTime) - meetingDuration;
                 meetingTime += meetingDuration;
                 hadStatusMeeting = true;
 
-                System.out.println(getTimeInString() + " " + name
-                        + " returns from the status meeting");
-                available.set(true);
             }
 
             // Leave work after 8 hours of work
