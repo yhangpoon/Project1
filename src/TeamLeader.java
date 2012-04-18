@@ -3,6 +3,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * This model describes a Team Leader. It extends Programmer.
@@ -16,7 +17,7 @@ public class TeamLeader extends Employee {
     /**
      * Availability of the Leader.
      */
-    private boolean available;
+    private final AtomicBoolean available;
 
     /**
      * The length of the team leader meetings.
@@ -48,7 +49,7 @@ public class TeamLeader extends Employee {
         for (int i = 0; i < developers.size(); i++) {
             this.team.put(developers.get(i), false);
         }
-        this.available = true;
+        this.available = new AtomicBoolean(true);
         this.workingTime = 0l;
         this.lunchTime = 0l;
         this.waitingTime = 0l;
@@ -69,8 +70,7 @@ public class TeamLeader extends Employee {
      * Answers Developer's question.
      */
     public synchronized void answerQuestion() {
-        if (available) {
-            available = false;
+        if (available.compareAndSet(true, false)) {
             Random gen = new Random();
             int askMan = gen.nextInt(10);
             if (askMan % 2 == 0) {
@@ -81,11 +81,11 @@ public class TeamLeader extends Employee {
                 long startTime = getTime();
                 manager.answerQuestion();
                 waitingTime += getTime() - startTime;
-                available = true;
+                available.set(true);
             } else {
                 System.out.println(getTimeInString() + ":" + name
                         + " answers the question");
-                available = true;
+                available.set(true);
             }
         } else {
             System.out.println(getTimeInString() + " " + name
@@ -193,10 +193,10 @@ public class TeamLeader extends Employee {
         while (hasArrived()) {
             int task = rand.nextInt(400000);
 
-            // Randomly Goes to Lunch
+            // Goes to Lunch
             if (!ateLunch) {
-                if ((available && task > 3 && task < 10) || getTime() >= 4200) {
-                    available = false;
+                if ((available.compareAndSet(true, false) && task > 3 && task < 10)
+                        || getTime() >= 4200) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
                     ateLunch = true;
@@ -206,7 +206,7 @@ public class TeamLeader extends Employee {
                     } catch (InterruptedException e) {
                         System.err.print(e.getMessage());
                     }
-                    available = true;
+                    available.set(true);
                     ateLunch = true;
                     System.out.println(getTimeInString() + " " + name
                             + " returns from lunch");
@@ -214,17 +214,18 @@ public class TeamLeader extends Employee {
             }
 
             // Ask Questions
-            if (available && task < 1) {
+            if (available.compareAndSet(true, false) && task < 1) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + manager.getEmployeeName() + " the question");
                 eventStartTime = getTime();
                 manager.answerQuestion();
                 waitingTime += getTime() - eventStartTime;
+                available.set(true);
             }
 
             // Project Status meeting
-            if (!hadStatusMeeting && available && getTime() >= 4800) {
-                available = false;
+            if (!hadStatusMeeting && available.compareAndSet(true, false)
+                    && getTime() >= 4800) {
                 while (!hasTeamArrived()) {
                     try {
                         sleep(10);
@@ -243,12 +244,12 @@ public class TeamLeader extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.toString());
                 }
-                available = true;
                 waitingTime += (getTime() - eventStartTime) - meetingDuration;
                 meetingTime += meetingDuration;
                 hadStatusMeeting = true;
                 System.out.println(getTimeInString() + " " + name
                         + " returns from the status meeting");
+                available.set(true);
             }
 
             // Leave work after 8 hours of work
