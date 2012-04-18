@@ -195,11 +195,10 @@ public class TeamLeader extends Employee {
 
             // Goes to Lunch
             if (!ateLunch) {
-                if ((available.compareAndSet(true, false) && task > 3 && task < 10)
-                        || getTime() >= 4200) {
+                if ((task > 3 && task < 10 && available.compareAndSet(true,
+                        false)) || getTime() >= 4200) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
-                    ateLunch = true;
                     try {
                         this.lunchTime = 300 + rand.nextInt(310);
                         sleep(this.lunchTime);
@@ -214,7 +213,7 @@ public class TeamLeader extends Employee {
             }
 
             // Ask Questions
-            if (available.compareAndSet(true, false) && task < 1) {
+            if (task < 1 && available.compareAndSet(true, false)) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + manager.getEmployeeName() + " the question");
                 eventStartTime = getTime();
@@ -224,8 +223,8 @@ public class TeamLeader extends Employee {
             }
 
             // Project Status meeting
-            if (!hadStatusMeeting && available.compareAndSet(true, false)
-                    && getTime() >= 4800) {
+            if (!hadStatusMeeting && getTime() >= 4800
+                    && available.compareAndSet(true, false)) {
                 while (!hasTeamArrived()) {
                     try {
                         sleep(10);
