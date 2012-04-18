@@ -86,7 +86,17 @@ public class Developer extends Employee {
         // Daily 15 minutes morning meeting
         eventStartTime = getTime();
         try {
+            System.out.println(getTimeInString() + " " + name + " notifies "
+                    + leader.name + " of arrival");
             leader.notifyArrival(this);
+
+            /*
+             * Leader should print out that he ended the meeting before I print
+             * that I have left.
+             */
+            sleep(1);
+            System.out.println(getTimeInString() + " " + name
+                    + " returns from the standup meeting");
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
         }
@@ -138,8 +148,17 @@ public class Developer extends Employee {
                 hadStatusMeeting = true;
                 waitingTime += getTime() - eventStartTime - meetingDuration;
                 meetingTime += meetingDuration;
+                try {
+                    /*
+                     * Manager should print out that he ended the meeting before
+                     * I print that I have left.
+                     */
+                    sleep(1);
+                } catch (InterruptedException e) {
+                    System.err.println(e.getMessage());
+                }
                 System.out.println(getTimeInString() + " " + name
-                        + " returns from the status meeting.");
+                        + " returns from the status meeting");
             }
 
             // Leave work after 8 hours of work
