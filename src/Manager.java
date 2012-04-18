@@ -70,6 +70,7 @@ public class Manager extends Employee {
             try {
                 System.out.println(getTimeInString() + " " + name
                         + " is busy at the moment");
+                System.out.flush();
                 this.wait();
             } catch (InterruptedException e) {
                 System.err.println(e.getMessage());
@@ -77,6 +78,7 @@ public class Manager extends Employee {
         }
         System.out.println(getTimeInString() + " " + name
                 + " answers a question");
+        System.out.flush();
         return true;
     }
 
@@ -112,11 +114,13 @@ public class Manager extends Employee {
             arrived();
             System.out.println(getTimeInString() + " " + name
                     + " arrives at the company");
+            System.out.flush();
         }
 
         // Do administrative stuff until all team leads arrived
         System.out.println(getTimeInString() + " " + name
                 + " surfs the internet");
+        System.out.flush();
         while (!hasLeadersArrived()) {
             working();
         }
@@ -126,15 +130,18 @@ public class Manager extends Employee {
         eventStartTime = getTime();
         System.out.println(getTimeInString() + " " + name
                 + " goes to the daily 15 minutes meeting");
+        System.out.flush();
         try {
             Thread.sleep(150);
         } catch (InterruptedException e) {
             System.err.print(e.getMessage());
         } finally {
-            available.set(true);
             System.out.println(getTimeInString() + " " + name
                     + " returns from the daily 15 minutes meeting");
+            System.out.flush();
+            available.set(true);
             notifyEveryone();
+
         }
         meetingTime += getTime() - eventStartTime;
 
@@ -149,6 +156,7 @@ public class Manager extends Employee {
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
+                System.out.flush();
                 try {
                     Thread.sleep(1800 - getTime());
                 } catch (InterruptedException e) {
@@ -160,6 +168,7 @@ public class Manager extends Employee {
                 meetingTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
                         + " returns from the executive meeting");
+                System.out.flush();
             }
 
             // 12pm - 1pm Lunch (Finish answering first)
@@ -168,17 +177,18 @@ public class Manager extends Employee {
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to lunch");
+                System.out.flush();
                 try {
                     Thread.sleep(3000 - getTime());
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
-                } finally {
-                    available.set(true);
-                    notifyEveryone();
                 }
                 lunchTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
                         + " returns from lunch");
+                System.out.flush();
+                available.set(true);
+                notifyEveryone();
             }
 
             // 2pm - 3pm Meeting (Finish answering first)
@@ -187,17 +197,18 @@ public class Manager extends Employee {
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
+                System.out.flush();
                 try {
                     Thread.sleep(4200 - getTime());
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
-                } finally {
-                    available.set(true);
-                    notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
                 System.out.println(getTimeInString() + " " + name
                         + " returns from the executive meeting");
+                System.out.flush();
+                available.set(true);
+                notifyEveryone();
             }
 
             // 4:15pm Meeting in Conference room
@@ -212,6 +223,7 @@ public class Manager extends Employee {
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " starts project status meeting");
+                System.out.flush();
                 try {
                     sleep(10);
                     conferenceRoom.lockRoom();
@@ -221,6 +233,7 @@ public class Manager extends Employee {
                     available.set(true);
                     System.out.println(getTimeInString() + " " + name
                             + " ends project status meeting");
+                    System.out.flush();
                     notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
@@ -231,6 +244,7 @@ public class Manager extends Employee {
             if (getTime() >= 5400) {
                 System.out.println(getTimeInString() + " " + name
                         + " leaves work");
+                System.out.flush();
                 this.officeTime = getTime() - arrivalTime;
                 left();
             }

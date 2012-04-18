@@ -82,12 +82,13 @@ public class Developer extends Employee {
         arrived();
         System.out.println(getTimeInString() + " " + name
                 + " arrives at the company");
-
+        System.out.flush();
         // Daily 15 minutes morning meeting
         eventStartTime = getTime();
         try {
             System.out.println(getTimeInString() + " " + name + " notifies "
                     + leader.name + " of arrival");
+            System.out.flush();
             leader.notifyArrival(this);
 
             /*
@@ -97,6 +98,7 @@ public class Developer extends Employee {
             sleep(1);
             System.out.println(getTimeInString() + " " + name
                     + " returns from the standup meeting");
+            System.out.flush();
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
         }
@@ -121,6 +123,7 @@ public class Developer extends Employee {
                     }
                     System.out.println(getTimeInString() + " " + name
                             + " returns from lunch");
+                    System.out.flush();
                     ateLunch = true;
                 }
             }
@@ -129,6 +132,7 @@ public class Developer extends Employee {
             if (task == 2) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + leader.getEmployeeName() + " a question");
+                System.out.flush();
                 eventStartTime = getTime();
                 leader.answerQuestion();
                 waitingTime += getTime() - eventStartTime;
@@ -138,6 +142,7 @@ public class Developer extends Employee {
             if (getTime() >= 4800 && !hadStatusMeeting) {
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
+                System.out.flush();
                 eventStartTime = getTime();
                 try {
                     leader.notifyArrival(this);
@@ -159,6 +164,7 @@ public class Developer extends Employee {
                 }
                 System.out.println(getTimeInString() + " " + name
                         + " returns from the status meeting");
+                System.out.flush();
             }
 
             // Leave work after 8 hours of work
@@ -173,6 +179,7 @@ public class Developer extends Employee {
                 officeTime = getTime() - arrivalTime;
                 System.out.println(getTimeInString() + " " + name
                         + " leaves work");
+                System.out.flush();
                 left();
             }
 
