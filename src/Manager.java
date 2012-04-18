@@ -2,6 +2,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * This model describes the Project Manager.
@@ -15,7 +16,7 @@ public class Manager extends Employee {
     /**
      * Availability of the Manager.
      */
-    private boolean available;
+    private final AtomicBoolean available;
 
     /**
      * The team of TeamLeaders.
@@ -27,6 +28,7 @@ public class Manager extends Employee {
      */
     public Manager(Calendar time, List<TeamLeader> leaders,
             ConferenceRoom conferenceRoom, String name) {
+        this.available = new AtomicBoolean(true);
         this.startTime = time;
         this.lunchTime = 0;
         this.meetingTime = 0;
@@ -64,7 +66,7 @@ public class Manager extends Employee {
      * Answers Developer's question.
      */
     public synchronized boolean answerQuestion() {
-        if (available == false) {
+        if (this.available.compareAndSet(false, false)) {
             try {
                 System.out.println(getTimeInString() + " " + name
                         + " is busy at the moment");
@@ -120,7 +122,7 @@ public class Manager extends Employee {
         }
 
         // Daily 15min meeting with team leads Notify all when back
-        available = false;
+        available.set(false);
         eventStartTime = getTime();
         System.out.println(getTimeInString() + " " + name
                 + " goes to the daily 15 minutes meeting");
@@ -129,11 +131,11 @@ public class Manager extends Employee {
         } catch (InterruptedException e) {
             System.err.print(e.getMessage());
         } finally {
-            available = true;
+            available.set(true);
+            System.out.println(getTimeInString() + " " + name
+                    + " returns from the daily 15 minutes meeting");
             notifyEveryone();
         }
-        System.out.println(getTimeInString() + " " + name
-                + " returns from the daily 15 minutes meeting");
         meetingTime += getTime() - eventStartTime;
 
         for (TeamLeader leader : leaders.keySet()) {
@@ -143,7 +145,7 @@ public class Manager extends Employee {
         while (hasArrived()) {
             // 10am - 11am Meeting (Finish answering first)
             if (getTime() >= 1200 && getTime() < 1800) {
-                available = false;
+                available.set(false);
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
@@ -152,7 +154,7 @@ public class Manager extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
                 } finally {
-                    available = true;
+                    available.set(true);
                     notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
@@ -162,7 +164,7 @@ public class Manager extends Employee {
 
             // 12pm - 1pm Lunch (Finish answering first)
             if (getTime() >= 2400 && getTime() < 3000) {
-                available = false;
+                available.set(false);
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to lunch");
@@ -171,7 +173,7 @@ public class Manager extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
                 } finally {
-                    available = true;
+                    available.set(true);
                     notifyEveryone();
                 }
                 lunchTime += getTime() - eventStartTime;
@@ -181,7 +183,7 @@ public class Manager extends Employee {
 
             // 2pm - 3pm Meeting (Finish answering first)
             if (getTime() >= 3600 && getTime() < 4200) {
-                available = false;
+                available.set(false);
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the executive meeting");
@@ -190,7 +192,7 @@ public class Manager extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
                 } finally {
-                    available = true;
+                    available.set(true);
                     notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
@@ -206,7 +208,7 @@ public class Manager extends Employee {
                     working();
                 }
                 notifyEveryone();
-                available = false;
+                available.set(false);
                 eventStartTime = getTime();
                 System.out.println(getTimeInString() + " " + name
                         + " starts project status meeting");
@@ -216,12 +218,13 @@ public class Manager extends Employee {
                 } catch (InterruptedException e) {
                     System.err.print(e.getMessage());
                 } finally {
-                    available = true;
+                    available.set(true);
+                    System.out.println(getTimeInString() + " " + name
+                            + " ends project status meeting");
                     notifyEveryone();
                 }
                 meetingTime += getTime() - eventStartTime;
-                System.out.println(getTimeInString() + " " + name
-                        + " ends project status meeting");
+
             }
 
             // 5pm Leave
