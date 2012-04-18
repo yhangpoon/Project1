@@ -212,10 +212,10 @@ public class TeamLeader extends Employee {
                     } catch (InterruptedException e) {
                         System.err.print(e.getMessage());
                     }
-                    available.set(true);
                     ateLunch = true;
                     System.out.println(getTimeInString() + " " + name
                             + " returns from lunch");
+                    available.set(true);
                 }
             }
 
