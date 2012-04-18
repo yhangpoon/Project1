@@ -1,8 +1,8 @@
 import java.util.Calendar;
 
 /**
- * This model describes a programmer, which can be a Developer and a Team
- * Leader. It implements Runnable.
+ * This model describes a employee, which can be a Developer, Team
+ * Leader or Manager. It extends Thread.
  * 
  * @author Yin
  * @author Shawn
