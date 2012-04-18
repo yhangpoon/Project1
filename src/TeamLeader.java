@@ -76,10 +76,8 @@ public class TeamLeader extends Employee {
             if (askMan % 2 == 0) {
                 System.out.println(getTimeInString() + " " + name
                         + " can't answer the question");
-                System.out.flush();
                 System.out.println(getTimeInString() + " " + name + " asks "
                         + manager.getEmployeeName() + " the question");
-                System.out.flush();
                 long startTime = getTime();
                 manager.answerQuestion();
                 waitingTime += getTime() - startTime;
@@ -87,13 +85,11 @@ public class TeamLeader extends Employee {
             } else {
                 System.out.println(getTimeInString() + ":" + name
                         + " answers the question");
-                System.out.flush();
                 available.set(true);
             }
         } else {
             System.out.println(getTimeInString() + " " + name
                     + " is not available");
-            System.out.flush();
             manager.answerQuestion();
         }
     }
@@ -153,12 +149,10 @@ public class TeamLeader extends Employee {
         arrived();
         System.out.println(getTimeInString() + " " + name
                 + " arrives at the company");
-        System.out.flush();
 
         // Daily 15 minutes morning meeting with manager
         System.out.println(getTimeInString() + " " + name
                 + " knocks on manager's door");
-        System.out.flush();
         eventStartTime = getTime();
         manager.notifyArrival(this);
         waitingTime += (getTime() - eventStartTime) - meetingDuration;
@@ -170,12 +164,10 @@ public class TeamLeader extends Employee {
         }
         System.out.println(getTimeInString() + " " + name
                 + " returns from standup meeting with the manager");
-        System.out.flush();
 
         // Daily 15 minutes morning meeting with team
         System.out.println(getTimeInString() + " " + name
                 + " waits for team members to arrive");
-        System.out.flush();
         while (!hasTeamArrived()) {
             try {
                 sleep(10);
@@ -188,7 +180,6 @@ public class TeamLeader extends Employee {
         // Team has arrived and have daily 15 minutes morning meeting
         System.out.println(getTimeInString() + " " + name
                 + " brings team to the conference room");
-        System.out.flush();
         eventStartTime = getTime();
         try {
             conferenceRoom.lockRoom();
@@ -201,7 +192,6 @@ public class TeamLeader extends Employee {
         meetingTime += meetingDuration;
         System.out.println(getTimeInString() + " " + name
                 + " ends the standup meeting");
-        System.out.flush();
 
         for (Developer developer : team.keySet()) {
             team.put(developer, false);
@@ -216,18 +206,16 @@ public class TeamLeader extends Employee {
                         false)) || getTime() >= 4200) {
                     System.out.println(getTimeInString() + " " + name
                             + " goes to lunch");
-                    System.out.flush();
                     try {
                         this.lunchTime = 300 + rand.nextInt(310);
                         sleep(this.lunchTime);
                     } catch (InterruptedException e) {
                         System.err.print(e.getMessage());
                     }
-                    System.out.println(getTimeInString() + " " + name
-                            + " returns from lunch");
-                    System.out.flush();
                     available.set(true);
                     ateLunch = true;
+                    System.out.println(getTimeInString() + " " + name
+                            + " returns from lunch");
                 }
             }
 
@@ -235,7 +223,6 @@ public class TeamLeader extends Employee {
             if (task < 1 && available.compareAndSet(true, false)) {
                 System.out.println(getTimeInString() + " " + name + " askes "
                         + manager.getEmployeeName() + " the question");
-                System.out.flush();
                 eventStartTime = getTime();
                 manager.answerQuestion();
                 waitingTime += getTime() - eventStartTime;
@@ -256,7 +243,6 @@ public class TeamLeader extends Employee {
                 notifyEveryone();
                 System.out.println(getTimeInString() + " " + name
                         + " goes to the project status meeting");
-                System.out.flush();
                 try {
                     eventStartTime = getTime();
                     manager.notifyArrival(this);
@@ -271,7 +257,6 @@ public class TeamLeader extends Employee {
 
                 System.out.println(getTimeInString() + " " + name
                         + " returns from the status meeting");
-                System.out.flush();
                 available.set(true);
             }
 
@@ -287,7 +272,6 @@ public class TeamLeader extends Employee {
                 officeTime = getTime() - arrivalTime;
                 System.out.println(getTimeInString() + " " + name
                         + " leaves work");
-                System.out.flush();
                 left();
             }
 
